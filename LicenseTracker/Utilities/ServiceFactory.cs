@@ -15,10 +15,14 @@ namespace LicenseTracker.Utilities
         {
             switch (type.ToLower())
             {
+                case "dashboard":
+                    return new LayoutNavigationService<DashboardViewModel>(
+                        navigationStore,
+                        () => new DashboardViewModel());
                 case "layout":
                     return new NavigationService<LayoutViewModel>(
                         navigationStore,
-                        () => new LayoutViewModel());
+                        () => new LayoutViewModel(navigationStore));
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type));
             }

@@ -31,7 +31,11 @@ namespace LicenseTracker
             INavigate layoutNavService =
                 ServiceFactory.CreateNavigationService(
                     "layout", _navigationStore);
+            INavigate dashboardNavService =
+                ServiceFactory.CreateNavigationService(
+                    "dashboard", _navigationStore);
             layoutNavService.Navigate();
+            dashboardNavService.Navigate();
 
             MainViewModel mainViewModel = new(_navigationStore);
             MainWindow = new MainView()
