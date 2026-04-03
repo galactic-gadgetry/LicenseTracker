@@ -4,11 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LicenseTracker.Views"
+             xmlns:card="clr-namespace:LicenseTracker.UIComponents.Cards"
              mc:Ignorable="d" 
              d:DesignHeight="950" d:DesignWidth="1500">
     
     <Grid>
-        <Border Background="{StaticResource ViewBackground}">
+        <Border
+            Background="{StaticResource ViewBackground}"
+            Padding="10">
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -22,8 +25,8 @@
                 <Border Grid.Row="0">
                     <Border.Resources>
                         <Style TargetType="Border">
-                            <Setter Property="Background" Value="{StaticResource ControlBackgroundFilleColorBrush1}"/>
-                            <Setter Property="Margin" Value="10"/>
+                            <Setter Property="Background" Value="{StaticResource LayerFillColorBrush1}"/>
+                            <Setter Property="Margin" Value="0,10"/>
                             <Setter Property="Padding" Value="0"/>
                             <Setter Property="CornerRadius" Value="4"/>
                         </Style>
@@ -41,7 +44,7 @@
                 <Border Grid.Row="1">
                     <StackPanel>
                         <Border>
-                            <Label Content="I'm a notification!" Background="LightBlue"/>
+                            <card:NotificationCard/>
                         </Border>
                     </StackPanel>
                 </Border>

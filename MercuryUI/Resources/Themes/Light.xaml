@@ -3,6 +3,13 @@
     
     
     <!-- #Colors -->
+    <Color x:Key="AccentColor90">#316CC4</Color>
+    <Color x:Key="AccentColor100">#1A5CBD</Color>
+    <Color x:Key="AccentColor110">#1753AA</Color>
+    <Color x:Key="AccentColor120">#154A97</Color>
+    <Color x:Key="AccentColor130">#124084</Color>
+    <Color x:Key="AccentColor140">#103771</Color>
+    
     <Color x:Key="LightGrayColor100">#F2F2F2</Color>
     <Color x:Key="LightGrayColor110">#DADADA</Color>
 
@@ -10,7 +17,9 @@
     
     
     <!-- #Brushes -->
-    <SolidColorBrush x:Key="ControlBackgroundFilleColorBrush1" Color="{StaticResource SolidControlFillColor100}"/>
+    <SolidColorBrush x:Key="LayerFillColorBrush1" Color="{StaticResource SolidControlFillColor100}"/>
+
+    <SolidColorBrush x:Key="AccentLayerFillColorBrush1" Color="{StaticResource AccentColor90}"/>
 
 
     <!-- #Buttons -->
