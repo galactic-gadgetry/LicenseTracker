@@ -1,4 +1,7 @@
-﻿using LicenseTracker.ViewModels;
+﻿using LicenseTracker.Services;
+using LicenseTracker.Stores;
+using LicenseTracker.Utilities;
+using LicenseTracker.ViewModels;
 using LicenseTracker.Views;
 using System.Configuration;
 using System.Data;
@@ -12,10 +15,25 @@ namespace LicenseTracker
     public partial class App : Application
     {
 
+        private readonly NavigationStore _navigationStore;
+
+
+
+        public App()
+        {
+            _navigationStore = StoreFactory.GetNewNaivgationStore();
+        }
+
+
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            MainViewModel mainViewModel = new();
+            INavigate layoutNavService =
+                ServiceFactory.CreateNavigationService(
+                    "layout", _navigationStore);
+            layoutNavService.Navigate();
+
+            MainViewModel mainViewModel = new(_navigationStore);
             MainWindow = new MainView()
             {
                 DataContext = mainViewModel,
