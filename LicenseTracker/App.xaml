@@ -4,6 +4,12 @@
              xmlns:local="clr-namespace:LicenseTracker"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/MercuryUI;compeont/MercuryUI.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
          
     </Application.Resources>
 </Application>
