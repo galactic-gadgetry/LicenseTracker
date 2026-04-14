@@ -19,16 +19,27 @@ namespace LicenseTracker.ViewModels
 
 
 
+        public ICommand FilterUpdateButtonClickedCommand { get; }
+
+
         public ICommand NewLicenseButtonClickedCommand { get; }
 
 
 
         public DashboardViewModel()
         {
+            FilterUpdateButtonClickedCommand = new RelayCommand(
+                new Action<object?>(OnFilterUpdateButtonClicked));
             NewLicenseButtonClickedCommand = new RelayCommand(
                 new Action<object?>(OnNewLicenseButtonClicked));
         }
 
+
+
+        private void OnFilterUpdateButtonClicked(object? obj)
+        {
+            throw new NotImplementedException();
+        }
 
 
         private void OnNewLicenseButtonClicked(object? obj)

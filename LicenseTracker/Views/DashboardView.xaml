@@ -73,18 +73,21 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <Border Grid.Column="0" Style="{StaticResource InputFieldBorderStyle}">
                             <StackPanel>
-                                <Label Content="Search box 1"/>
-                                <TextBox Text="Search1"/>
+                                <Label Content="Filter by Product"/>
+                                <ComboBox SelectedIndex="0">
+                                    <ComboBoxItem>Filter1</ComboBoxItem>
+                                </ComboBox>
                             </StackPanel>
                         </Border>
 
                         <Border Grid.Column="1" Style="{StaticResource InputFieldBorderStyle}">
                             <StackPanel>
-                                <Label Content="Filter box 2"/>
+                                <Label Content="Filter by User"/>
                                 <ComboBox x:Name="Test" SelectedIndex="0">
                                     <ComboBoxItem>Filter1</ComboBoxItem>
                                 </ComboBox>
@@ -93,16 +96,24 @@
 
                         <Border Grid.Column="2" Style="{StaticResource InputFieldBorderStyle}">
                             <StackPanel>
-                                <Label Content="Search box 2"/>
-                                <TextBox Text="Search2"/>
+                                <Label Content="Filter by Status"/>
+                                <ComboBox SelectedIndex="0">
+                                    <ComboBoxItem>Filter1</ComboBoxItem>
+                                </ComboBox>
                             </StackPanel>
                         </Border>
 
-                        <Border
-                            Grid.Column="3"
-                            Margin="5,0">
+                        <Border Grid.Column="3" Style="{StaticResource InputFieldBorderStyle}">
+                            <StackPanel>
+                                <Label Content="Search box 2"/>
+                                <TextBox Text="Search2" IsEnabled="False"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="4" Margin="5,0">
                             <Button
                                 Content="Update"
+                                Command="{Binding FilterUpdateButtonClickedCommand}"
                                 Width="100"
                                 HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                         </Border>
