@@ -22,5 +22,10 @@ namespace LicenseTracker.Views
         {
             InitializeComponent();
         }
+
+        private void OnLicenseItemList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

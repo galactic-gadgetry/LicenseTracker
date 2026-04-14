@@ -132,6 +132,7 @@
                         <Border Grid.Column="0">
                             <DataGrid
                                 ItemsSource="{Binding Licenses}"
+                                SelectedItem="{Binding SelectedLicenseItem}"
                                 ColumnWidth="*"
                                 AutoGenerateColumns="False"
                                 CanUserAddRows="False"
