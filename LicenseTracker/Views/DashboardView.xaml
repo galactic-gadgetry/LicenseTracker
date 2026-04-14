@@ -117,11 +117,21 @@
                         
                         <!-- #License Item List -->
                         <Border Grid.Column="0">
-                            <ListView>
-                                <ListViewItem>
-                                    I'm a license item!
-                                </ListViewItem>
-                            </ListView>
+                            <DataGrid
+                                ItemsSource="{Binding Licenses}"
+                                ColumnWidth="*"
+                                AutoGenerateColumns="False"
+                                CanUserAddRows="False"
+                                IsReadOnly="True"
+                                AlternatingRowBackground="Aqua">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Product" Binding="{Binding Product}"/>
+                                    <DataGridTextColumn Header="Number/ID" Binding="{Binding LicenseId}"/>
+                                    <DataGridTextColumn Header="User" Binding="{Binding User}"/>
+                                    <DataGridTextColumn Header="Exp Date" Binding="{Binding ExpirationDate, StringFormat={}{0:MM/dd/yyyy}}"/>
+                                    <DataGridTextColumn Header="Status" Binding="{Binding Status}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
                         </Border>
                         
                         <!-- #Info Area -->
