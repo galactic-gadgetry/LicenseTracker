@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LicenseTracker.ViewModels
 {
-    internal class MainViewModel : ViewModelBase
+    internal class LayoutViewModel : ViewModelBase
     {
         /// <summary>
         /// Used to manage the app's navigation state.
@@ -14,24 +14,24 @@ namespace LicenseTracker.ViewModels
 
 
         /// <summary>
-        /// The Main view's current content view-model.
+        /// The layout's current content view-model.
         /// </summary>
         public ViewModelBase? CurrentContentViewModel =>
-            _navigationStore.CurrentMainContentViewModel;
+            _navigationStore.CurrentLayoutContentViewModel;
 
 
-        
-        public MainViewModel(NavigationStore navigationStore)
+
+        public LayoutViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
 
-            _navigationStore.CurrentMainContentViewModelChanged +=
+            _navigationStore.CurrentLayoutContentViewModelChanged +=
                 OnCurrentContentViewModelChanged;
         }
 
 
         /// <summary>
-        /// Handles the main content view-model change event.
+        /// Handles the content view-model's change event.
         /// </summary>
         private void OnCurrentContentViewModelChanged()
         {

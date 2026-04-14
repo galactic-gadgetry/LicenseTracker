@@ -1,4 +1,32 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
+    
+    <!-- #Colors -->
+    <Color x:Key="AccentColor90">#316CC4</Color>
+    <Color x:Key="AccentColor100">#1A5CBD</Color>
+    <Color x:Key="AccentColor110">#1753AA</Color>
+    <Color x:Key="AccentColor120">#154A97</Color>
+    <Color x:Key="AccentColor130">#124084</Color>
+    <Color x:Key="AccentColor140">#103771</Color>
+    
+    <Color x:Key="LightGrayColor100">#F2F2F2</Color>
+    <Color x:Key="LightGrayColor110">#DADADA</Color>
+
+    <Color x:Key="SolidControlFillColor100">#FFFFFF</Color>
+    
+    
+    <!-- #Brushes -->
+    <SolidColorBrush x:Key="LayerFillColorBrush1" Color="{StaticResource SolidControlFillColor100}"/>
+
+    <SolidColorBrush x:Key="AccentLayerFillColorBrush1" Color="{StaticResource AccentColor90}"/>
+
+
+    <!-- #Buttons -->
+    <SolidColorBrush x:Key="ToolBarButtonBackgroundMouseOver" Color="{StaticResource LightGrayColor100}"/>
+    <SolidColorBrush x:Key="ToolBarButtonBackgroundPressed" Color="{StaticResource LightGrayColor110}"/>
+
+    <!-- #Views -->
+    <SolidColorBrush x:Key="ViewBackground" Color="{StaticResource LightGrayColor100}"/>
+
 </ResourceDictionary>

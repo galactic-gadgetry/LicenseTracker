@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    
+    
+    <!-- Setting the default TextBlock control prevents us from
+    setting the foreground of the ContentPresenter's TextElement,
+    because the ContentPresenter creates a TextBlock for string
+    content. This data template is a workaround so that we can set
+    the ContentPresenter's TextElement foreground. -->
+    <DataTemplate DataType="{x:Type sys:String}">
+        <TextBlock Text="{Binding}">
+            <TextBlock.Resources>
+                <Style TargetType="{x:Type TextBlock}"/>
+            </TextBlock.Resources>
+        </TextBlock>
+    </DataTemplate>
+
+
+    <Style x:Key="DefaultTextBlockStyle" TargetType="TextBlock">
+        
+    </Style>
+
+
+    <Style TargetType="TextBlock" BasedOn="{StaticResource DefaultTextBlockStyle}"/>
+
+</ResourceDictionary>

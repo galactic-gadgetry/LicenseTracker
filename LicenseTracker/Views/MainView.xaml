@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LicenseTracker.Views"
+        xmlns:ui="clr-namespace:LicenseTracker.UIComponents"
+        xmlns:vm="clr-namespace:LicenseTracker.ViewModels"
         mc:Ignorable="d"
         Title="License Tracker"
         Height="950" Width="1500"
@@ -12,7 +14,13 @@
     <Grid>
         <Border>
 
-            <Label Content="Main view placeholder"/>
+            <ContentControl Content="{Binding CurrentContentViewModel}">
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type vm:LayoutViewModel}">
+                        <ui:Layout/>
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
 
         </Border>
     </Grid>

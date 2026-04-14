@@ -1,0 +1,229 @@
+﻿<UserControl x:Class="LicenseTracker.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LicenseTracker.Views"
+             xmlns:card="clr-namespace:LicenseTracker.UIComponents.Cards"
+             mc:Ignorable="d" 
+             d:DesignHeight="950" d:DesignWidth="1500" d:Background="{StaticResource ViewBackground}">
+    
+    <Grid>
+        <Border Padding="10">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="103"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <!-- #Tool bar -->
+                <Border Grid.Row="0">
+                    <Border.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="{StaticResource LayerFillColorBrush1}"/>
+                            <Setter Property="Margin" Value="0,10,0,5"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="CornerRadius" Value="4"/>
+                        </Style>
+                    </Border.Resources>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel.Resources>
+                            <Style TargetType="Button" BasedOn="{StaticResource ToolBarButtonStyle}"/>
+                        </StackPanel.Resources>
+                        <Button
+                            Content="New License"
+                            Command="{Binding NewLicenseButtonClickedCommand}"/>
+                        <Button Content="Button2"/>
+                    </StackPanel>
+                </Border>
+                
+                <!-- # Notification Area -->
+                <Border Grid.Row="1">
+                    <StackPanel>
+                        <Border>
+                            <card:NotificationCard/>
+                        </Border>
+                    </StackPanel>
+                </Border>
+                
+                <!-- #Search & Filter Area -->
+                <Border
+                    Grid.Row="2"
+                    Margin="0,10,0,5">
+                    <Grid>
+                        <Grid.Resources>
+                            <Style x:Key="InputFieldBorderStyle" TargetType="Border">
+                                <Setter Property="Width" Value="150"/>
+                                <Setter Property="Margin" Value="5,0"/>
+                            </Style>
+
+                            <Style TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
+                                <Setter Property="Height" Value="{Binding Path=ActualHeight, ElementName=Test}"/>
+                                <Setter Property="Padding" Value="3,0"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Style="{StaticResource InputFieldBorderStyle}">
+                            <StackPanel>
+                                <Label Content="Filter by Product"/>
+                                <ComboBox SelectedIndex="0">
+                                    <ComboBoxItem>Filter1</ComboBoxItem>
+                                </ComboBox>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="1" Style="{StaticResource InputFieldBorderStyle}">
+                            <StackPanel>
+                                <Label Content="Filter by User"/>
+                                <ComboBox x:Name="Test" SelectedIndex="0">
+                                    <ComboBoxItem>Filter1</ComboBoxItem>
+                                </ComboBox>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="2" Style="{StaticResource InputFieldBorderStyle}">
+                            <StackPanel>
+                                <Label Content="Filter by Status"/>
+                                <ComboBox SelectedIndex="0">
+                                    <ComboBoxItem>Filter1</ComboBoxItem>
+                                </ComboBox>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="3" Style="{StaticResource InputFieldBorderStyle}">
+                            <StackPanel>
+                                <Label Content="Search box 2"/>
+                                <TextBox Text="Search2" IsEnabled="False"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="4" Margin="5,0">
+                            <Button
+                                Content="Update"
+                                Command="{Binding FilterUpdateButtonClickedCommand}"
+                                Width="100"
+                                HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                        </Border>
+                    </Grid>
+                </Border>
+                
+                <!-- #License Item Area -->
+                <Border Grid.Row="3">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.7*"/>
+                            <ColumnDefinition Width="0.3*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <!-- #License Item List -->
+                        <Border Grid.Column="0">
+                            <DataGrid
+                                ItemsSource="{Binding Licenses}"
+                                SelectedItem="{Binding SelectedLicenseItem}"
+                                ColumnWidth="*"
+                                AutoGenerateColumns="False"
+                                CanUserAddRows="False"
+                                IsReadOnly="True"
+                                AlternatingRowBackground="Aqua"
+                                SelectionMode="Single">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Product" Binding="{Binding Product}"/>
+                                    <DataGridTextColumn Header="Number/ID" Binding="{Binding LicenseId}"/>
+                                    <DataGridTextColumn Header="User" Binding="{Binding User}"/>
+                                    <DataGridTextColumn Header="Exp Date" Binding="{Binding ExpirationDate, StringFormat={}{0:MM/dd/yyyy}}"/>
+                                    <DataGridTextColumn Header="Status" Binding="{Binding Status}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Border>
+                        
+                        <!-- #Info Area -->
+                        <Border
+                            Grid.Column="1"
+                            Margin="10,0,0,0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Border Grid.Row="0">
+                                    <Label
+                                        Content="License Info"
+                                        FontSize="18" FontWeight="DemiBold"/>
+                                </Border>
+
+                                <Border Grid.Row="1" Visibility="{Binding IsProductSelected, Converter={StaticResource BoolToVis}}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <!-- #Product -->
+                                        <Label Grid.Column="0" Grid.Row="0" Content="Product:"/>
+                                        <Label Grid.Column="1" Grid.Row="0" Content="{Binding SelectedLicenseItem.Product}"/>
+
+                                        <!-- #Number/ID -->
+                                        <Label Grid.Column="0" Grid.Row="1" Content="Number/ID:"/>
+                                        <Label Grid.Column="1" Grid.Row="1" Content="{Binding SelectedLicenseItem.LicenseId}"/>
+
+                                        <!-- #User -->
+                                        <Label Grid.Column="0" Grid.Row="2" Content="User:"/>
+                                        <Label Grid.Column="1" Grid.Row="2" Content="{Binding SelectedLicenseItem.User}"/>
+
+                                        <!-- #Issue Date -->
+                                        <Label Grid.Column="0" Grid.Row="3" Content="Issue Date:"/>
+                                        <Label Grid.Column="1" Grid.Row="3" Content="{Binding SelectedLicenseItem.IssueDate}" ContentStringFormat="MM/dd/yyyy"/>
+
+                                        <!-- #Expiration Date -->
+                                        <Label Grid.Column="0" Grid.Row="4" Content="Expiration Date:"/>
+                                        <Label Grid.Column="1" Grid.Row="4" Content="{Binding SelectedLicenseItem.ExpirationDate}" ContentStringFormat="MM/dd/yyyy"/>
+
+                                        <!-- #Status -->
+                                        <Label Grid.Column="0" Grid.Row="5" Content="Status:"/>
+                                        <Label Grid.Column="1" Grid.Row="5" Content="{Binding SelectedLicenseItem.Status}"/>
+                                        
+                                        <!-- #Vendor -->
+                                        <Label Grid.Column="0" Grid.Row="6" Content="Vendor:"/>
+                                        <Label Grid.Column="1" Grid.Row="6" Content="{Binding SelectedLicenseItem.Vendor}"/>
+                                        
+                                        <!-- #Purchase Date -->
+                                        <Label Grid.Column="0" Grid.Row="7" Content="Purchase Date:"/>
+                                        <Label Grid.Column="1" Grid.Row="7" Content="{Binding SelectedLicenseItem.PurchaseDate}" ContentStringFormat="MM/dd/yyyy"/>
+                                    </Grid>
+                                </Border>
+
+                                <!-- #Metadata -->
+                                <Border Grid.Row="2"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+            </Grid>
+
+        </Border> 
+    </Grid>
+    
+</UserControl>
