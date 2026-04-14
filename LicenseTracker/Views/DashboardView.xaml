@@ -35,7 +35,9 @@
                         <StackPanel.Resources>
                             <Style TargetType="Button" BasedOn="{StaticResource ToolBarButtonStyle}"/>
                         </StackPanel.Resources>
-                        <Button Content="Button1"/>
+                        <Button
+                            Content="New License"
+                            Command="{Binding NewLicenseButtonClickedCommand}"/>
                         <Button Content="Button2"/>
                     </StackPanel>
                 </Border>
