@@ -135,12 +135,66 @@
                         </Border>
                         
                         <!-- #Info Area -->
-                        <Border Grid.Column="1">
-                            <StackPanel>
-                                <Label Content="This is"/>
-                                <Label Content="going to be"/>
-                                <Label Content="information"/>
-                            </StackPanel>
+                        <Border
+                            Grid.Column="1"
+                            Margin="10,0,0,0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Border Grid.Row="0">
+                                    <Label
+                                        Content="License Info"
+                                        FontSize="18" FontWeight="DemiBold"/>
+                                </Border>
+
+                                <Border Grid.Row="1">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <!-- #Product -->
+                                        <Label Grid.Column="0" Grid.Row="0" Content="Product:"/>
+                                        <Label Grid.Column="1" Grid.Row="0" Content="Placeholder"/>
+
+                                        <!-- #Number/ID -->
+                                        <Label Grid.Column="0" Grid.Row="1" Content="Number/ID:"/>
+                                        <Label Grid.Column="1" Grid.Row="1" Content="1234567890"/>
+
+                                        <!-- #User -->
+                                        <Label Grid.Column="0" Grid.Row="2" Content="User:"/>
+                                        <Label Grid.Column="1" Grid.Row="2" Content="User Name 1"/>
+
+                                        <!-- #Issue Date -->
+                                        <Label Grid.Column="0" Grid.Row="3" Content="Issue Date:"/>
+                                        <Label Grid.Column="1" Grid.Row="3" Content="4/14/2026"/>
+
+                                        <!-- #Expiration Date -->
+                                        <Label Grid.Column="0" Grid.Row="4" Content="Expiration Date:"/>
+                                        <Label Grid.Column="1" Grid.Row="4" Content="4/14/2027"/>
+
+                                        <!-- #Status -->
+                                        <Label Grid.Column="0" Grid.Row="5" Content="Status:"/>
+                                        <Label Grid.Column="1" Grid.Row="5" Content="Active"/>
+                                    </Grid>
+                                </Border>
+
+                                <!-- #Metadata -->
+                                <Border Grid.Row="2"/>
+                            </Grid>
                         </Border>
                     </Grid>
                 </Border>
