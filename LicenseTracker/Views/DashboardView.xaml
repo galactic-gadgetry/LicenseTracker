@@ -137,7 +137,8 @@
                                 AutoGenerateColumns="False"
                                 CanUserAddRows="False"
                                 IsReadOnly="True"
-                                AlternatingRowBackground="Aqua">
+                                AlternatingRowBackground="Aqua"
+                                SelectionMode="Single">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Product" Binding="{Binding Product}"/>
                                     <DataGridTextColumn Header="Number/ID" Binding="{Binding LicenseId}"/>
@@ -165,7 +166,7 @@
                                         FontSize="18" FontWeight="DemiBold"/>
                                 </Border>
 
-                                <Border Grid.Row="1">
+                                <Border Grid.Row="1" Visibility="{Binding IsProductSelected, Converter={StaticResource BoolToVis}}">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
@@ -178,31 +179,41 @@
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
 
                                         <!-- #Product -->
                                         <Label Grid.Column="0" Grid.Row="0" Content="Product:"/>
-                                        <Label Grid.Column="1" Grid.Row="0" Content="Placeholder"/>
+                                        <Label Grid.Column="1" Grid.Row="0" Content="{Binding SelectedLicenseItem.Product}"/>
 
                                         <!-- #Number/ID -->
                                         <Label Grid.Column="0" Grid.Row="1" Content="Number/ID:"/>
-                                        <Label Grid.Column="1" Grid.Row="1" Content="1234567890"/>
+                                        <Label Grid.Column="1" Grid.Row="1" Content="{Binding SelectedLicenseItem.LicenseId}"/>
 
                                         <!-- #User -->
                                         <Label Grid.Column="0" Grid.Row="2" Content="User:"/>
-                                        <Label Grid.Column="1" Grid.Row="2" Content="User Name 1"/>
+                                        <Label Grid.Column="1" Grid.Row="2" Content="{Binding SelectedLicenseItem.User}"/>
 
                                         <!-- #Issue Date -->
                                         <Label Grid.Column="0" Grid.Row="3" Content="Issue Date:"/>
-                                        <Label Grid.Column="1" Grid.Row="3" Content="4/14/2026"/>
+                                        <Label Grid.Column="1" Grid.Row="3" Content="{Binding SelectedLicenseItem.IssueDate}" ContentStringFormat="MM/dd/yyyy"/>
 
                                         <!-- #Expiration Date -->
                                         <Label Grid.Column="0" Grid.Row="4" Content="Expiration Date:"/>
-                                        <Label Grid.Column="1" Grid.Row="4" Content="4/14/2027"/>
+                                        <Label Grid.Column="1" Grid.Row="4" Content="{Binding SelectedLicenseItem.ExpirationDate}" ContentStringFormat="MM/dd/yyyy"/>
 
                                         <!-- #Status -->
                                         <Label Grid.Column="0" Grid.Row="5" Content="Status:"/>
-                                        <Label Grid.Column="1" Grid.Row="5" Content="Active"/>
+                                        <Label Grid.Column="1" Grid.Row="5" Content="{Binding SelectedLicenseItem.Status}"/>
+                                        
+                                        <!-- #Vendor -->
+                                        <Label Grid.Column="0" Grid.Row="6" Content="Vendor:"/>
+                                        <Label Grid.Column="1" Grid.Row="6" Content="{Binding SelectedLicenseItem.Vendor}"/>
+                                        
+                                        <!-- #Purchase Date -->
+                                        <Label Grid.Column="0" Grid.Row="7" Content="Purchase Date:"/>
+                                        <Label Grid.Column="1" Grid.Row="7" Content="{Binding SelectedLicenseItem.PurchaseDate}" ContentStringFormat="MM/dd/yyyy"/>
                                     </Grid>
                                 </Border>
 

@@ -12,24 +12,37 @@ namespace LicenseTracker.ViewModels
     {
 
         // Backing Fields
+        private bool isProductSelected = false;
         private LicenseItem? selectedLicenseItem = null;
 
 
 
+        public bool IsProductSelected
+        {
+            get => isProductSelected;
+            set
+            {
+                isProductSelected = value;
+                OnPropertyChanged(nameof(IsProductSelected));
+            }
+        }
+
+
         public List<LicenseItem> Licenses { get; set; } = new()
         {
-            new LicenseItem { ExpirationDate = DateTime.Now.AddYears(1), IssueDate = DateTime.Now, LicenseId = "1234567890", Product = "Mathematica", Status = LicenseStatus.Active, User = "User Name 1" },
-            new LicenseItem { ExpirationDate = DateTime.Now.AddYears(2), IssueDate = DateTime.Now, LicenseId = "0987654321", Product = "MATLAB", Status = LicenseStatus.Archived, User = "User Name 2" }
+            new LicenseItem { ExpirationDate = DateTime.Now.AddYears(1), IssueDate = DateTime.Now, LicenseId = "1234567890", Product = "Mathematica", Status = LicenseStatus.Active, User = "User Name 1" , PurchaseDate = DateTime.Now, Vendor = "Mathematica" },
+            new LicenseItem { ExpirationDate = DateTime.Now.AddYears(2), IssueDate = DateTime.Now, LicenseId = "0987654321", Product = "MATLAB", Status = LicenseStatus.Archived, User = "User Name 2" , PurchaseDate = DateTime.Now, Vendor = "MathWorks" },
         };
 
 
-        public LicenseItem SelectedLicenseItem
+        public LicenseItem? SelectedLicenseItem
         {
             get => selectedLicenseItem;
             set
             {
                 selectedLicenseItem = value;
                 OnSelectedLicenseItemChanged();
+                OnPropertyChanged(nameof(SelectedLicenseItem));
             }
         }
 
@@ -66,7 +79,7 @@ namespace LicenseTracker.ViewModels
 
         private void OnSelectedLicenseItemChanged()
         {
-            throw new NotImplementedException();
+            IsProductSelected = SelectedLicenseItem != null;
         }
     }
 }

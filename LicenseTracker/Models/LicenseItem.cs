@@ -29,9 +29,15 @@ namespace LicenseTracker.Models
         public string Product { get; set; }
 
 
+        public DateTime PurchaseDate { get; set; }
+
+
         public LicenseStatus Status { get; set; }
 
 
         public string User { get; set; }
+
+
+        public string Vendor { get; set; }
     }
 }
