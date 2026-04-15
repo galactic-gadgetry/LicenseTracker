@@ -36,7 +36,9 @@
                         <Button
                             Content="New License"
                             Command="{Binding NewLicenseButtonClickedCommand}"/>
-                        <Button Content="Button2"/>
+                        <Button
+                            Content="Save"
+                            Command="{Binding SaveButtonClickedCommand}"/>
                     </StackPanel>
                 </Border>
                 

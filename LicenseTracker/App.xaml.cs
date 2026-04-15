@@ -18,10 +18,14 @@ namespace LicenseTracker
         private readonly NavigationStore _navigationStore;
 
 
+        private readonly SessionStore _sessionStore;
+
+
 
         public App()
         {
             _navigationStore = StoreFactory.GetNewNaivgationStore();
+            _sessionStore = StoreFactory.GetNewSessionStore();
         }
 
 
@@ -30,10 +34,10 @@ namespace LicenseTracker
         {
             INavigate layoutNavService =
                 ServiceFactory.CreateNavigationService(
-                    "layout", _navigationStore);
+                    "layout", _navigationStore, _sessionStore);
             INavigate dashboardNavService =
                 ServiceFactory.CreateNavigationService(
-                    "dashboard", _navigationStore);
+                    "dashboard", _navigationStore, _sessionStore);
             layoutNavService.Navigate();
             dashboardNavService.Navigate();
 

@@ -12,5 +12,11 @@ namespace LicenseTracker.Utilities
         {
             return new NavigationStore(); 
         }
+
+
+        public static SessionStore GetNewSessionStore()
+        {
+            return new SessionStore();
+        }
     }
 }

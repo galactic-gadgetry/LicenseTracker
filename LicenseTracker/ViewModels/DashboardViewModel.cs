@@ -1,5 +1,7 @@
 ﻿using LicenseTracker.Commands;
 using LicenseTracker.Models;
+using LicenseTracker.Services;
+using LicenseTracker.Stores;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,6 +12,9 @@ namespace LicenseTracker.ViewModels
 {
     internal class DashboardViewModel : ViewModelBase
     {
+
+        private readonly SessionStore _sessionStore;
+
 
         // Backing Fields
         private bool isProductSelected = false;
@@ -54,13 +59,20 @@ namespace LicenseTracker.ViewModels
         public ICommand NewLicenseButtonClickedCommand { get; }
 
 
+        public ICommand SaveButtonClickedCommand { get; }
 
-        public DashboardViewModel()
+
+
+        public DashboardViewModel(SessionStore sessionStore)
         {
+            _sessionStore = sessionStore;
+
             FilterUpdateButtonClickedCommand = new RelayCommand(
                 new Action<object?>(OnFilterUpdateButtonClicked));
             NewLicenseButtonClickedCommand = new RelayCommand(
                 new Action<object?>(OnNewLicenseButtonClicked));
+            SaveButtonClickedCommand = new RelayCommand(
+                new Action<object?>(OnSaveButtonClicked));
         }
 
 
@@ -74,6 +86,12 @@ namespace LicenseTracker.ViewModels
         private void OnNewLicenseButtonClicked(object? obj)
         {
             throw new NotImplementedException();
+        }
+
+
+        private void OnSaveButtonClicked(object? obj)
+        {
+            FileService.SaveSession(_sessionStore.CurrentSession);
         }
 
 
