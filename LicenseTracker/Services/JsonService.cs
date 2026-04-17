@@ -9,7 +9,13 @@ namespace LicenseTracker.Services
 {
     class JsonService
     {
-
+        /// <summary>
+        /// Reads string data from a JSON file.
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if
+        /// the file path is not of type JSON</exception>
         public static string GetJsonStringFromFile(string filePath)
         {
             ArgumentNullException.ThrowIfNullOrEmpty(filePath, nameof(filePath));
@@ -21,7 +27,15 @@ namespace LicenseTracker.Services
             return File.ReadAllText(filePath);
         }
 
-
+        /// <summary>
+        /// Creates a <see cref="Session"/> instance from a JSON
+        /// file.
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        /// <exception cref="FileLoadException">Thrown if the string
+        /// found in the JSON file cannot be
+        /// deserialized</exception>
         public static Session LoadSessionFromJson(string filePath)
         {
             ArgumentNullException.ThrowIfNullOrEmpty(filePath, nameof(filePath));
@@ -39,7 +53,11 @@ namespace LicenseTracker.Services
             return session;
         }
 
-
+        /// <summary>
+        /// Saves the object as a serialized JSON file.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="filePath"></param>
         public static void SaveObject(object obj, string filePath)
         {
             string jsonString = JsonConvert.SerializeObject(obj,

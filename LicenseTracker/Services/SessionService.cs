@@ -10,7 +10,13 @@ namespace LicenseTracker.Services
 {
     static class SessionService
     {
-
+        /// <summary>
+        /// Closes the session store's current session.
+        /// </summary>
+        /// <param name="sessionStore"></param>
+        /// <returns>False if the user selects the Cancel button,
+        /// true otherwise</returns>
+        /// <exception cref="NotImplementedException"></exception>
         public static bool CloseCurrentSession(SessionStore sessionStore)
         {
             ArgumentNullException.ThrowIfNull(sessionStore, nameof(sessionStore));
@@ -50,7 +56,13 @@ namespace LicenseTracker.Services
             return new Session();
         }
 
-
+        /// <summary>
+        /// Loads a <see cref="Session"/> instance from a JSON file
+        /// and sets it as the session store's current session.
+        /// </summary>
+        /// <param name="sessionStore"></param>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         public static SessionStore LoadSessionToSessionStoreFromJson(
             SessionStore sessionStore, string filePath)
         {
@@ -60,7 +72,10 @@ namespace LicenseTracker.Services
             return sessionStore;
         }
 
-
+        /// <summary>
+        /// Saves the session store's current session to file.
+        /// </summary>
+        /// <param name="sessionStore"></param>
         public static void SaveCurrentSession(SessionStore sessionStore)
         {
             ArgumentNullException.ThrowIfNull(sessionStore, nameof(sessionStore));
@@ -69,7 +84,10 @@ namespace LicenseTracker.Services
         }
 
 
-
+        /// <summary>
+        /// Saves the session store's current session to a JSON file.
+        /// </summary>
+        /// <param name="sessionStore"></param>
         private static void SaveCurrentSessionToJson(SessionStore sessionStore)
         {
             ArgumentNullException.ThrowIfNull(sessionStore, nameof(sessionStore));
@@ -77,7 +95,10 @@ namespace LicenseTracker.Services
             SaveSessionToJson(sessionStore.CurrentSession);
         }
 
-
+        /// <summary>
+        /// Saves the session to a JSON file.
+        /// </summary>
+        /// <param name="session"></param>
         private static void SaveSessionToJson(Session session)
         {
             // Check for null or invalid session state.
@@ -91,7 +112,13 @@ namespace LicenseTracker.Services
             FileService.SaveSessionToJson(session);
         }
 
-
+        /// <summary>
+        /// Sets the session store's
+        /// <see cref="SessionStore.CurrentSession"/> property to
+        /// the session.
+        /// </summary>
+        /// <param name="sessionStore"></param>
+        /// <param name="session"></param>
         private static void SetSessionStoreCurrentSession(
             SessionStore sessionStore, Session session)
         {

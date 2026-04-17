@@ -8,7 +8,11 @@ namespace LicenseTracker.Services
 {
     static class DialogService
     {
-
+        /// <summary>
+        /// Displays a save changes message box.
+        /// </summary>
+        /// <param name="sessionStore"></param>
+        /// <returns></returns>
         public static MessageBoxResult PromptUserWithSaveChangesMessage(
             SessionStore sessionStore)
         {

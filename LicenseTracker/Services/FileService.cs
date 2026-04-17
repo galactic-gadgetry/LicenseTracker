@@ -12,7 +12,7 @@ namespace LicenseTracker.Services
             "C:\\Users\\nbspangl\\Documents\\coding\\WPF\\LicenseTracker\\dv\\testData";
 
 
-
+        
         public static void SaveSessionToJson(Session session)
         {
             ArgumentNullException.ThrowIfNull(session, nameof(session));

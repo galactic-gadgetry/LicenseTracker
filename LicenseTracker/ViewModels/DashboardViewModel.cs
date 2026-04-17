@@ -13,31 +13,39 @@ namespace LicenseTracker.ViewModels
 {
     internal class DashboardViewModel : ViewModelBase
     {
-
+        /// <summary>
+        /// Used to the manage the app's session state.
+        /// </summary>
         private readonly SessionStore _sessionStore;
 
 
         // Backing Fields
-        private bool isProductSelected = false;
+        private bool isLicenseSelected = false;
         private LicenseItem? selectedLicenseItem = null;
 
 
-
-        public bool IsProductSelected
+        /// <summary>
+        /// True if a license is selected by the user.
+        /// </summary>
+        public bool IsLicenseSelected
         {
-            get => isProductSelected;
+            get => isLicenseSelected;
             set
             {
-                isProductSelected = value;
-                OnPropertyChanged(nameof(IsProductSelected));
+                isLicenseSelected = value;
+                OnPropertyChanged(nameof(IsLicenseSelected));
             }
         }
 
-
+        /// <summary>
+        /// Returns the current session's license collection.
+        /// </summary>
         public ObservableCollection<LicenseItem> Licenses =>
             _sessionStore.CurrentSession.Licenses;
 
-
+        /// <summary>
+        /// The currently selected license.
+        /// </summary>
         public LicenseItem? SelectedLicenseItem
         {
             get => selectedLicenseItem;
@@ -50,13 +58,19 @@ namespace LicenseTracker.ViewModels
         }
 
 
-
+        /// <summary>
+        /// Executed when the filter area's Update button is clicked.
+        /// </summary>
         public ICommand FilterUpdateButtonClickedCommand { get; }
 
-
+        /// <summary>
+        /// Executed when the New License button is clicked.
+        /// </summary>
         public ICommand NewLicenseButtonClickedCommand { get; }
 
-
+        /// <summary>
+        /// Executed when the Save button is clicked.
+        /// </summary>
         public ICommand SaveButtonClickedCommand { get; }
 
 
@@ -95,10 +109,12 @@ namespace LicenseTracker.ViewModels
             SessionService.SaveCurrentSession(_sessionStore);
         }
 
-
+        /// <summary>
+        /// Handles the selected license item changed event.
+        /// </summary>
         private void OnSelectedLicenseItemChanged()
         {
-            IsProductSelected = SelectedLicenseItem != null;
+            IsLicenseSelected = SelectedLicenseItem != null;
         }
     }
 }

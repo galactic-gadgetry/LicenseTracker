@@ -39,7 +39,13 @@ namespace LicenseTracker.ViewModels
         }
 
 
-
+        /// <summary>
+        /// Handles the window closing event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <returns>True if the user wishes to close the window,
+        /// false otherwise</returns>
         public bool OnWindowClosing(object? sender, CancelEventArgs e)
         {
             // Save the app settings.
