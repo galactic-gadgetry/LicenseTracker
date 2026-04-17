@@ -4,6 +4,7 @@ using LicenseTracker.Services;
 using LicenseTracker.Stores;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -33,11 +34,8 @@ namespace LicenseTracker.ViewModels
         }
 
 
-        public List<LicenseItem> Licenses { get; set; } = new()
-        {
-            new LicenseItem { ExpirationDate = DateTime.Now.AddYears(1), IssueDate = DateTime.Now, LicenseId = "1234567890", Product = "Mathematica", Status = LicenseStatus.Active, User = "User Name 1" , PurchaseDate = DateTime.Now, Vendor = "Mathematica" },
-            new LicenseItem { ExpirationDate = DateTime.Now.AddYears(2), IssueDate = DateTime.Now, LicenseId = "0987654321", Product = "MATLAB", Status = LicenseStatus.Archived, User = "User Name 2" , PurchaseDate = DateTime.Now, Vendor = "MathWorks" },
-        };
+        public ObservableCollection<LicenseItem> Licenses =>
+            _sessionStore.CurrentSession.Licenses;
 
 
         public LicenseItem? SelectedLicenseItem
@@ -67,6 +65,9 @@ namespace LicenseTracker.ViewModels
         {
             _sessionStore = sessionStore;
 
+            // DELETE ME!!!!!!!!!!!!!!!
+            _sessionStore.CurrentSession.Licenses = Licenses;
+
             FilterUpdateButtonClickedCommand = new RelayCommand(
                 new Action<object?>(OnFilterUpdateButtonClicked));
             NewLicenseButtonClickedCommand = new RelayCommand(
@@ -91,7 +92,7 @@ namespace LicenseTracker.ViewModels
 
         private void OnSaveButtonClicked(object? obj)
         {
-            FileService.SaveSession(_sessionStore.CurrentSession);
+            SessionService.SaveCurrentSession(_sessionStore);
         }
 
 

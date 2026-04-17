@@ -13,14 +13,9 @@ namespace LicenseTracker.Services
 
 
 
-        public static void SaveSession(Session? session)
+        public static void SaveSessionToJson(Session session)
         {
             ArgumentNullException.ThrowIfNull(session, nameof(session));
-
-            // Set the Session instance's HasUnsavedChanges property
-            // to false to indicate that the book has no unsaved
-            // changes in the save file.
-            session.HasUnsavedChanges = false;
 
             JsonService.SaveObject(session, session.SaveFilePath);
         }

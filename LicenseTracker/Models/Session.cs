@@ -30,7 +30,7 @@ namespace LicenseTracker.Models
         public Guid Id { get; init; }
 
 
-        public ObservableCollection<LicenseItem>? Licenses { get; set; }
+        public ObservableCollection<LicenseItem> Licenses { get; set; } = new();
 
 
 

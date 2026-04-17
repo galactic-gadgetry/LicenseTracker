@@ -1,6 +1,8 @@
-﻿using LicenseTracker.Stores;
+﻿using LicenseTracker.Services;
+using LicenseTracker.Stores;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace LicenseTracker.ViewModels
@@ -12,6 +14,11 @@ namespace LicenseTracker.ViewModels
         /// </summary>
         private readonly NavigationStore _navigationStore;
 
+        /// <summary>
+        /// Used to manage the app's session state.
+        /// </summary>
+        public SessionStore _sessionStore;
+
 
         /// <summary>
         /// The Main view's current content view-model.
@@ -21,12 +28,27 @@ namespace LicenseTracker.ViewModels
 
 
         
-        public MainViewModel(NavigationStore navigationStore)
+        public MainViewModel(NavigationStore navigationStore,
+            SessionStore sessionStore)
         {
             _navigationStore = navigationStore;
+            _sessionStore = sessionStore;
 
             _navigationStore.CurrentMainContentViewModelChanged +=
                 OnCurrentContentViewModelChanged;
+        }
+
+
+
+        public bool OnWindowClosing(object? sender, CancelEventArgs e)
+        {
+            // Save the app settings.
+            SettingsService.SetAppSettings(_sessionStore);
+
+            // The session service's CloseCurrentSession method
+            // return true if the user wishes to continue closing
+            // the window, false otherwise.
+            return SessionService.CloseCurrentSession(_sessionStore);
         }
 
 
