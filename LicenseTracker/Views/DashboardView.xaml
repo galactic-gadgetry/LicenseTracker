@@ -137,7 +137,7 @@
                                 AutoGenerateColumns="False"
                                 CanUserAddRows="False"
                                 IsReadOnly="True"
-                                AlternatingRowBackground="Aqua"
+                                AlternatingRowBackground="AliceBlue"
                                 SelectionMode="Single">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Product" Binding="{Binding Product}"/>

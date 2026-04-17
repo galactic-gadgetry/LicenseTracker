@@ -76,11 +76,15 @@ namespace LicenseTracker.Services
         /// Saves the session store's current session to file.
         /// </summary>
         /// <param name="sessionStore"></param>
-        public static void SaveCurrentSession(SessionStore sessionStore)
+        public static (bool, string) SaveCurrentSession(SessionStore sessionStore)
         {
             ArgumentNullException.ThrowIfNull(sessionStore, nameof(sessionStore));
 
             SaveCurrentSessionToJson(sessionStore);
+
+            // This is where we would return any errors that might
+            // arise during save attempts.
+            return (true, string.Empty);
         }
 
 

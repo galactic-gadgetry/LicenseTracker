@@ -106,7 +106,15 @@ namespace LicenseTracker.ViewModels
 
         private void OnSaveButtonClicked(object? obj)
         {
-            SessionService.SaveCurrentSession(_sessionStore);
+            (bool, string) result = SessionService.SaveCurrentSession(_sessionStore);
+            if (result.Item1)
+            {
+                OnInfoUpdated("Session saved");
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         /// <summary>
