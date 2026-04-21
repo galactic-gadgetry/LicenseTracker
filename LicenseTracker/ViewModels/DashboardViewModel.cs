@@ -1,7 +1,10 @@
 ﻿using LicenseTracker.Commands;
 using LicenseTracker.Models;
+using LicenseTracker.Services;
+using LicenseTracker.Stores;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,31 +13,39 @@ namespace LicenseTracker.ViewModels
 {
     internal class DashboardViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Used to the manage the app's session state.
+        /// </summary>
+        private readonly SessionStore _sessionStore;
+
 
         // Backing Fields
-        private bool isProductSelected = false;
+        private bool isLicenseSelected = false;
         private LicenseItem? selectedLicenseItem = null;
 
 
-
-        public bool IsProductSelected
+        /// <summary>
+        /// True if a license is selected by the user.
+        /// </summary>
+        public bool IsLicenseSelected
         {
-            get => isProductSelected;
+            get => isLicenseSelected;
             set
             {
-                isProductSelected = value;
-                OnPropertyChanged(nameof(IsProductSelected));
+                isLicenseSelected = value;
+                OnPropertyChanged(nameof(IsLicenseSelected));
             }
         }
 
+        /// <summary>
+        /// Returns the current session's license collection.
+        /// </summary>
+        public ObservableCollection<LicenseItem> Licenses =>
+            _sessionStore.CurrentSession.Licenses;
 
-        public List<LicenseItem> Licenses { get; set; } = new()
-        {
-            new LicenseItem { ExpirationDate = DateTime.Now.AddYears(1), IssueDate = DateTime.Now, LicenseId = "1234567890", Product = "Mathematica", Status = LicenseStatus.Active, User = "User Name 1" , PurchaseDate = DateTime.Now, Vendor = "Mathematica" },
-            new LicenseItem { ExpirationDate = DateTime.Now.AddYears(2), IssueDate = DateTime.Now, LicenseId = "0987654321", Product = "MATLAB", Status = LicenseStatus.Archived, User = "User Name 2" , PurchaseDate = DateTime.Now, Vendor = "MathWorks" },
-        };
-
-
+        /// <summary>
+        /// The currently selected license.
+        /// </summary>
         public LicenseItem? SelectedLicenseItem
         {
             get => selectedLicenseItem;
@@ -47,20 +58,36 @@ namespace LicenseTracker.ViewModels
         }
 
 
-
+        /// <summary>
+        /// Executed when the filter area's Update button is clicked.
+        /// </summary>
         public ICommand FilterUpdateButtonClickedCommand { get; }
 
-
+        /// <summary>
+        /// Executed when the New License button is clicked.
+        /// </summary>
         public ICommand NewLicenseButtonClickedCommand { get; }
 
+        /// <summary>
+        /// Executed when the Save button is clicked.
+        /// </summary>
+        public ICommand SaveButtonClickedCommand { get; }
 
 
-        public DashboardViewModel()
+
+        public DashboardViewModel(SessionStore sessionStore)
         {
+            _sessionStore = sessionStore;
+
+            // DELETE ME!!!!!!!!!!!!!!!
+            _sessionStore.CurrentSession.Licenses = Licenses;
+
             FilterUpdateButtonClickedCommand = new RelayCommand(
                 new Action<object?>(OnFilterUpdateButtonClicked));
             NewLicenseButtonClickedCommand = new RelayCommand(
                 new Action<object?>(OnNewLicenseButtonClicked));
+            SaveButtonClickedCommand = new RelayCommand(
+                new Action<object?>(OnSaveButtonClicked));
         }
 
 
@@ -77,9 +104,25 @@ namespace LicenseTracker.ViewModels
         }
 
 
+        private void OnSaveButtonClicked(object? obj)
+        {
+            (bool, string) result = SessionService.SaveCurrentSession(_sessionStore);
+            if (result.Item1)
+            {
+                OnInfoUpdated("Session saved");
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// Handles the selected license item changed event.
+        /// </summary>
         private void OnSelectedLicenseItemChanged()
         {
-            IsProductSelected = SelectedLicenseItem != null;
+            IsLicenseSelected = SelectedLicenseItem != null;
         }
     }
 }

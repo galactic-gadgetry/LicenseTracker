@@ -42,16 +42,35 @@ namespace LicenseTracker.Stores
         public Action? CurrentMainContentViewModelChanged;
 
 
+        public event EventHandler<string>? InfoUpdated;
+
+
 
         private void OnCurrentLayoutContentViewModelChanged()
         {
+            if (CurrentLayoutContentViewModel != null)
+            {
+                CurrentLayoutContentViewModel.InfoUpdated +=
+                    OnInfoUpdated;
+            }
             CurrentLayoutContentViewModelChanged?.Invoke();
         }
 
 
         private void OnCurrentMainContentViewModelChanged()
         {
+            if (CurrentMainContentViewModel != null)
+            {
+                CurrentMainContentViewModel.InfoUpdated +=
+                    OnInfoUpdated;
+            }
             CurrentMainContentViewModelChanged?.Invoke();
+        }
+
+
+        private void OnInfoUpdated(object? sender, string info)
+        {
+            InfoUpdated?.Invoke(this, info);
         }
     }
 }

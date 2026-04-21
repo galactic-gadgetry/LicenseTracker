@@ -5,6 +5,7 @@ using LicenseTracker.ViewModels;
 using LicenseTracker.Views;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Windows;
 
 namespace LicenseTracker
@@ -18,10 +19,14 @@ namespace LicenseTracker
         private readonly NavigationStore _navigationStore;
 
 
+        private readonly SessionStore _sessionStore;
+
+
 
         public App()
         {
             _navigationStore = StoreFactory.GetNewNaivgationStore();
+            _sessionStore = InitializeSessionStore();
         }
 
 
@@ -30,14 +35,14 @@ namespace LicenseTracker
         {
             INavigate layoutNavService =
                 ServiceFactory.CreateNavigationService(
-                    "layout", _navigationStore);
+                    "layout", _navigationStore, _sessionStore);
             INavigate dashboardNavService =
                 ServiceFactory.CreateNavigationService(
-                    "dashboard", _navigationStore);
+                    "dashboard", _navigationStore, _sessionStore);
             layoutNavService.Navigate();
             dashboardNavService.Navigate();
 
-            MainViewModel mainViewModel = new(_navigationStore);
+            MainViewModel mainViewModel = new(_navigationStore, _sessionStore);
             MainWindow = new MainView()
             {
                 DataContext = mainViewModel,
@@ -45,6 +50,25 @@ namespace LicenseTracker
             MainWindow.Show();
 
             base.OnStartup(e);
+        }
+
+
+
+        private SessionStore InitializeSessionStore()
+        {
+            string? lastOpenSessionPath =
+                SettingsService.GetLastOpenSessionPath();
+
+            // If the settings value returned is null or the file
+            // cannot be found, return a new session store.
+            if (lastOpenSessionPath == null || !File.Exists(lastOpenSessionPath))
+            {
+                return StoreFactory.GetNewSessionStore();
+            }
+
+            // Attempt to load the session in the same state it
+            // was in when the app last exited.
+            return StoreFactory.LoadSessionStoreFromFile(lastOpenSessionPath);
         }
     }
 

@@ -7,6 +7,10 @@ namespace LicenseTracker.ViewModels
 {
     internal class LayoutViewModel : ViewModelBase
     {
+        // Backing Fields
+        private string infoText = string.Empty;
+
+
         /// <summary>
         /// Used to manage the app's navigation state.
         /// </summary>
@@ -20,6 +24,17 @@ namespace LicenseTracker.ViewModels
             _navigationStore.CurrentLayoutContentViewModel;
 
 
+        public string InfoText
+        {
+            get => infoText;
+            set
+            {
+                infoText = value;
+                OnPropertyChanged(nameof(InfoText));
+            }
+        }
+
+
 
         public LayoutViewModel(NavigationStore navigationStore)
         {
@@ -27,6 +42,7 @@ namespace LicenseTracker.ViewModels
 
             _navigationStore.CurrentLayoutContentViewModelChanged +=
                 OnCurrentContentViewModelChanged;
+            _navigationStore.InfoUpdated += OnInfoUpdated;
         }
 
 
@@ -36,6 +52,12 @@ namespace LicenseTracker.ViewModels
         private void OnCurrentContentViewModelChanged()
         {
             OnPropertyChanged(nameof(CurrentContentViewModel));
+        }
+
+
+        private void OnInfoUpdated(object? sender, string info)
+        {
+            InfoText = info;
         }
     }
 }

@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LicenseTracker.Views"
         xmlns:ui="clr-namespace:LicenseTracker.UIComponents"
+        xmlns:util="clr-namespace:LicenseTracker.Utilities"
         xmlns:vm="clr-namespace:LicenseTracker.ViewModels"
         mc:Ignorable="d"
         Title="License Tracker"
         Height="950" Width="1500"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        util:WindowCloser.EnableWindowClosing="True">
     
     <Grid>
         <Border>

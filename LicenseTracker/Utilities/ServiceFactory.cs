@@ -11,14 +11,14 @@ namespace LicenseTracker.Utilities
     {
 
         public static INavigate CreateNavigationService(string type,
-            NavigationStore navigationStore)
+            NavigationStore navigationStore, SessionStore sessionStore)
         {
             switch (type.ToLower())
             {
                 case "dashboard":
                     return new LayoutNavigationService<DashboardViewModel>(
                         navigationStore,
-                        () => new DashboardViewModel());
+                        () => new DashboardViewModel(sessionStore));
                 case "layout":
                     return new NavigationService<LayoutViewModel>(
                         navigationStore,
