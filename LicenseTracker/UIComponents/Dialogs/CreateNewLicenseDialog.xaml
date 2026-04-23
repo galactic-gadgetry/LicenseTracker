@@ -1,0 +1,233 @@
+﻿<Window x:Class="LicenseTracker.UIComponents.Dialogs.CreateNewLicenseDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LicenseTracker.UIComponents.Dialogs"
+        mc:Ignorable="d"
+        Title="Create New License"
+        Style="{StaticResource DialogWindowStyle}">
+    
+    <Grid>
+        <Border Style="{StaticResource DialogOutterBorderStyle}">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <!-- #Title -->
+                <Border Grid.Row="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label
+                            Grid.Column="0"
+                            Content="New License"/>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <Button Content="X"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                
+                <!-- #Content -->
+                <Border Grid.Row="1">
+                    <ScrollViewer>
+                        <StackPanel>
+                            <StackPanel.Resources>
+                                <Style x:Key="SubtitleBorderStyle" TargetType="Border">
+                                    <Setter Property="BorderBrush" Value="{StaticResource LayerBorderBrush1}"/>
+                                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                </Style>
+
+                                <Style x:Key="SubtitleLabelStyle" TargetType="Label" BasedOn="{StaticResource DefaultLabelStyle}">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </Style>
+                            </StackPanel.Resources>
+                            <!-- #Product -->
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                
+                                <!-- #Subtitle -->
+                                <Border Grid.Row="0" Style="{StaticResource SubtitleBorderStyle}">
+                                    <Label Content="Product" Style="{StaticResource SubtitleLabelStyle}"/>
+                                </Border>
+
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    
+                                    <!-- #Product -->
+                                    <Label
+                                        Grid.Column="0" Grid.Row="0"
+                                        Content="Product:"/>
+                                    <ComboBox
+                                        Grid.Column="1" Grid.Row="0"
+                                        SelectedIndex="0">
+                                        <ComboBoxItem>Product 1</ComboBoxItem>
+                                    </ComboBox>
+                                    <Button
+                                        Grid.Column="2" Grid.Row="0"
+                                        Content="Add"/>
+
+                                    <!-- #Number/ID-->
+                                    <Label
+                                        Grid.Column="0" Grid.Row="1"
+                                        Content="Number/ID:"/>
+                                    <TextBox
+                                        Grid.Column="1" Grid.Row="1"
+                                        Text="1234567890"/>
+
+                                    <!-- #Issue Date -->
+                                    <Label
+                                        Grid.Column="0" Grid.Row="2"
+                                        Content="Issue Date:"/>
+                                    <DatePicker Grid.Column="1" Grid.Row="2"/>
+
+                                    <!-- #Expiration Date -->
+                                    <Label
+                                        Grid.Column="0" Grid.Row="3"
+                                        Content="Expiration Date:"/>
+                                    <DatePicker Grid.Column="1" Grid.Row="3"/>
+
+                                    <!-- #Status -->
+                                    <Label
+                                        Grid.Column="0" Grid.Row="4"
+                                        Content="Status"/>
+                                    <ComboBox
+                                        Grid.Column="1" Grid.Row="4"
+                                        SelectedIndex="0">
+                                        <ComboBoxItem>Active</ComboBoxItem>
+                                    </ComboBox>
+                                </Grid>
+                            </Grid>
+                            
+                            <!-- #User -->
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                
+                                <!-- #Subtitle -->
+                                <Border Grid.Row="0" Style="{StaticResource SubtitleBorderStyle}">
+                                    <Label Content="Users" Style="{StaticResource SubtitleLabelStyle}"/>
+                                </Border>
+                                
+                                <!-- #User -->
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition  Height="Auto"/>
+                                        <RowDefinition  Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    
+                                    <Label
+                                        Grid.Column="0" Grid.Row="0"
+                                        Content="User:"/>
+                                    <ComboBox
+                                        Grid.Column="1" Grid.Row="0"
+                                        SelectedIndex="0">
+                                        <ComboBoxItem>User 1</ComboBoxItem>
+                                    </ComboBox>
+                                    <Button
+                                        Grid.Column="2" Grid.Row="0"
+                                        Content="Add"/>
+
+                                    <!-- #Administrator -->
+                                    <Label
+                                        Grid.Column="0" Grid.Row="1"
+                                        Content="Administrator:"/>
+                                    <ComboBox
+                                        Grid.Column="1" Grid.Row="1"
+                                        SelectedIndex="0">
+                                        <ComboBoxItem>User 1</ComboBoxItem>
+                                    </ComboBox>
+                                    <Button
+                                        Grid.Column="2" Grid.Row="1"
+                                        Content="Add"/>
+                                </Grid>
+                            </Grid>
+                            
+                            <!-- #Vendor -->
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                
+                                <!-- #Subtitle -->
+                                <Border Grid.Row="0" Style="{StaticResource SubtitleBorderStyle}">
+                                    <Label Content="Vendor" Style="{StaticResource SubtitleLabelStyle}"/>
+                                </Border>
+                                
+                                <!-- #Vendor -->
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    
+                                    <Label
+                                        Grid.Column="0" Grid.Row="0"
+                                        Content="Vendor"/>
+                                    <ComboBox
+                                        Grid.Column="1" Grid.Row="0"
+                                        SelectedIndex="0">
+                                        <ComboBoxItem>Vendor 1</ComboBoxItem>
+                                    </ComboBox>
+                                    <Button
+                                        Grid.Column="2" Grid.Row="0"
+                                        Content="Add"/>
+
+                                    <!-- #Purchase Date -->
+                                    <Label
+                                        Grid.Column="0" Grid.Row="1"
+                                        Content="Purchase Date:"/>
+                                    <DatePicker Grid.Column="1" Grid.Row="1"/>
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+                
+                <!-- #Controls -->
+                <Border Grid.Row="2">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="Create"/>
+                        <Button Content="Cancel"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+            
+        </Border>
+    </Grid>
+    
+</Window>

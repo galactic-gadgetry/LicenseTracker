@@ -12,11 +12,20 @@
     
     <Color x:Key="LightGrayColor100">#F2F2F2</Color>
     <Color x:Key="LightGrayColor110">#DADADA</Color>
+    <Color x:Key="LightGrayColor120">#C2C2C2</Color>
+    <Color x:Key="LightGrayColor130">#A9A9A9</Color>
+    <Color x:Key="LightGrayColor140">#919191</Color>
 
     <Color x:Key="SolidControlFillColor100">#FFFFFF</Color>
+
+    <Color x:Key="TextFillColorPrimary100">#000000</Color>
+
+    <Color x:Key="WindowBackgroundPrimary100">#FFFFFF</Color>
     
     
     <!-- #Brushes -->
+    <SolidColorBrush x:Key="LayerBorderBrush1" Color="{StaticResource LightGrayColor140}"/>
+
     <SolidColorBrush x:Key="LayerFillColorBrush1" Color="{StaticResource SolidControlFillColor100}"/>
 
     <SolidColorBrush x:Key="AccentLayerFillColorBrush1" Color="{StaticResource AccentColor90}"/>
@@ -28,5 +37,10 @@
 
     <!-- #Views -->
     <SolidColorBrush x:Key="ViewBackground" Color="{StaticResource LightGrayColor100}"/>
+    
+    <!-- #Windows -->
+    <SolidColorBrush x:Key="DialogWindowBorderBrush" Color="{StaticResource AccentColor100}"/>
+    <SolidColorBrush x:Key="WindowBackground" Color="{StaticResource WindowBackgroundPrimary100}"/>
+    <SolidColorBrush x:Key="WindowForeground" Color="{StaticResource TextFillColorPrimary100}"/>
 
 </ResourceDictionary>

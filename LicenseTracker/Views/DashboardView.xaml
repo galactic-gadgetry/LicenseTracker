@@ -62,10 +62,8 @@
                                 <Setter Property="Margin" Value="5,0"/>
                             </Style>
 
-                            <Style TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
+                            <Style TargetType="TextBox" BasedOn="{StaticResource InputFieldTextBoxStyle}">
                                 <Setter Property="Height" Value="{Binding Path=ActualHeight, ElementName=Test}"/>
-                                <Setter Property="Padding" Value="3,0"/>
-                                <Setter Property="VerticalContentAlignment" Value="Center"/>
                             </Style>
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
