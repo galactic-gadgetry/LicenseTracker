@@ -51,5 +51,6 @@
     <SolidColorBrush x:Key="DialogWindowBorderBrush" Color="{StaticResource AccentColor100}"/>
     <SolidColorBrush x:Key="WindowBackground" Color="{StaticResource WindowBackgroundPrimary100}"/>
     <SolidColorBrush x:Key="WindowForeground" Color="{StaticResource TextFillColorPrimary100}"/>
+    <SolidColorBrush x:Key="WindowTitleBarForeground" Color="{StaticResource LightGrayColor120}"/>
 
 </ResourceDictionary>

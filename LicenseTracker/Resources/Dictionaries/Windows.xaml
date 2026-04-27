@@ -4,11 +4,14 @@
 
     <Style x:Key="DialogWindowStyle" TargetType="Window" BasedOn="{StaticResource DefaultWindowStyle}">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Height" Value="450"/>
+        <Setter Property="Height" Value="650"/>
         <Setter Property="Width" Value="550"/>
+        <Setter Property="MinHeight" Value="193"/>
+        <Setter Property="MinWidth" Value="287"/>
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="AllowsTransparency" Value="True"/>
         <Setter Property="SizeToContent" Value="WidthAndHeight"/>
+        <Setter Property="ResizeMode" Value="CanResizeWithGrip"/>
     </Style>
     
 </ResourceDictionary>

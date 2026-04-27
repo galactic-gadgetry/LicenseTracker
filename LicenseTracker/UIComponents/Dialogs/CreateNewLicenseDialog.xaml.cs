@@ -28,5 +28,10 @@ namespace LicenseTracker.UIComponents.Dialogs
         {
             this.DragMove();
         }
+
+        private void XButton_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+        }
     }
 }
