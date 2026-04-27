@@ -100,7 +100,7 @@ namespace LicenseTracker.ViewModels
 
         private void OnNewLicenseButtonClicked(object? obj)
         {
-            throw new NotImplementedException();
+            DialogService.PromptUserWithNewLicenseDialog();
         }
 
 

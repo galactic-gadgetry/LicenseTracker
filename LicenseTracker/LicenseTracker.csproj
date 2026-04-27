@@ -9,11 +9,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\Icons\X\x_black.png" />
+    <None Remove="Resources\Images\Icons\X\x_light_gray.png" />
+    <None Remove="Resources\Images\Icons\X\x_white.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MercuryUI\MercuryUI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\Icons\X\x_black.png" />
+    <Resource Include="Resources\Images\Icons\X\x_light_gray.png" />
+    <Resource Include="Resources\Images\Icons\X\x_white.png" />
   </ItemGroup>
 
   <ItemGroup>

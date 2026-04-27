@@ -1,4 +1,5 @@
 ﻿using LicenseTracker.Stores;
+using LicenseTracker.UIComponents.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,16 @@ namespace LicenseTracker.Services
 {
     static class DialogService
     {
+
+        public static void PromptUserWithNewLicenseDialog()
+        {
+            CreateNewLicenseDialog dlg = new();
+            Window mainWindow = Application.Current.MainWindow;
+            dlg.Owner = mainWindow;
+
+            dlg.ShowDialog();
+        }
+
         /// <summary>
         /// Displays a save changes message box.
         /// </summary>

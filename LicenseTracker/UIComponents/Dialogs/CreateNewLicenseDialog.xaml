@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LicenseTracker.UIComponents.Dialogs"
         mc:Ignorable="d"
-        Title="Create New License"
-        Style="{StaticResource DialogWindowStyle}">
+        Title="New License"
+        Style="{StaticResource DialogWindowStyle}"
+        WindowStartupLocation="CenterOwner">
     
     <Grid>
         <Border Style="{StaticResource DialogOutterBorderStyle}">
@@ -26,11 +27,45 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label
-                            Grid.Column="0"
-                            Content="New License"/>
+                        <Border Grid.Column="0" MouseLeftButtonDown="Header_MouseLeftButtonDown">
+                            <Label Content="New License"/>
+                        </Border>
                         <StackPanel Grid.Column="1" Orientation="Horizontal">
-                            <Button Content="X"/>
+                            <Button>
+                                <Button.Resources>
+                                    <Style TargetType="Button" BasedOn="{StaticResource TransparentIconButtonStyle}">
+                                        <Setter Property="Width" Value="45"/>
+                                        <Setter Property="Margin" Value="0"/>
+                                        <Setter Property="Padding" Value="0"/>
+                                        <Setter Property="VerticalAlignment" Value="Stretch"/>
+                                        <Setter Property="Border.CornerRadius" Value="0,3,0,0"/>
+                                        <Style.Triggers>
+                                            <!-- #Mouse over behaviors -->
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="{StaticResource TransparentIconButtonAlertMouseOver}"/>
+                                            </Trigger>
+                                            <!-- #Pressed behaviors -->
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter Property="Background" Value="{StaticResource TransparentIconButtonAlertPressed}"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Resources>
+                                <Image>
+                                    <Image.Resources>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Source" Value="{StaticResource XLightGray}"/>
+                                            <Setter Property="Height" Value="18"/>
+                                            <Style.Triggers>
+                                                <!-- #Mouse over beahaviors -->
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsMouseOver}" Value="True">
+                                                    <Setter Property="Source" Value="{StaticResource XWhite}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Resources>
+                                </Image>
+                            </Button>
                         </StackPanel>
                     </Grid>
                 </Border>

@@ -21,5 +21,12 @@ namespace LicenseTracker.UIComponents.Dialogs
         {
             InitializeComponent();
         }
+
+
+
+        private void Header_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
     }
 }

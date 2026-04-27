@@ -6,7 +6,6 @@
         <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
         <Setter Property="MinHeight" Value="100"/>
         <Setter Property="MinWidth" Value="100"/>
-        <Setter Property="Padding" Value="5,7"/>
         <Setter Property="BorderBrush" Value="{StaticResource DialogWindowBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="CornerRadius" Value="4"/>
