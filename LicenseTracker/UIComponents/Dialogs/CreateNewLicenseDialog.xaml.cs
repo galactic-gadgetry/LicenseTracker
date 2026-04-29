@@ -37,7 +37,7 @@ namespace LicenseTracker.UIComponents.Dialogs
 
 
         // Backing Fields
-        private User? administrator;
+        private User? selectedAdministrator;
         private DateTime? expirationDate;
         private DateTime? issueDate;
         private string? product = string.Empty;
@@ -50,7 +50,15 @@ namespace LicenseTracker.UIComponents.Dialogs
 
 
 
-        public User? Administrator { get; set; }
+        public User? SelectedAdministrator
+        {
+            get => selectedAdministrator;
+            set
+            {
+                selectedAdministrator = value;
+                OnPropertyChanged(nameof(SelectedAdministrator));
+            }
+        }
 
 
         public Session CurrentSession =>
@@ -135,9 +143,26 @@ namespace LicenseTracker.UIComponents.Dialogs
 
 
 
+        private void AddAdministratorButton_Click(object sender, RoutedEventArgs e)
+        {
+            CreateNewUserDialog dlg = DialogService.PromptUserWithNewUserDialog(_sessionStore, this);
+
+            // If the Create New User Dialog result is true,
+            // the new user was created, set the selected administrator
+            // of the combo box to the new user.
+            User? newAdministrator = dlg.NewUser;
+            if (newAdministrator != null)
+            {
+                SelectedAdministrator =
+                    Users.FirstOrDefault(u => u.Name == newAdministrator.Name);
+            }
+        }
+
+
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
         {
-            CreateNewProductDialog dlg = DialogService.PromptUserWithNewProductDialog(_sessionStore, this);
+            CreateNewProductDialog dlg =
+                DialogService.PromptUserWithNewProductDialog(_sessionStore, this);
 
             // If the Create New Product Dialog result is true,
             // the new product was created, set the selected product
@@ -153,7 +178,8 @@ namespace LicenseTracker.UIComponents.Dialogs
 
         private void AddUserButton_Click(object sender, RoutedEventArgs e)
         {
-            CreateNewUserDialog dlg = DialogService.PromptUserWithNewUserDialog(_sessionStore, this);
+            CreateNewUserDialog dlg =
+                DialogService.PromptUserWithNewUserDialog(_sessionStore, this);
 
             // If the Create New User Dialog result is true,
             // the new user was created, set the selected user
@@ -181,6 +207,7 @@ namespace LicenseTracker.UIComponents.Dialogs
 
         private void InitializeInputFields()
         {
+            SelectedAdministrator = Users.FirstOrDefault(u => u.Name == "Unassigned");
             SelectedProduct = Products.FirstOrDefault(p => p.Name == "None");
             SelectedStatus = Statuses.FirstOrDefault(s => s == LicenseStatus.Active);
             SelectedUser = Users.FirstOrDefault(u => u.Name == "Unassigned");

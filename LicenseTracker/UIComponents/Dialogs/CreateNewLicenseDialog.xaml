@@ -198,10 +198,11 @@
                                     <ComboBox
                                         Grid.Column="1" Grid.Row="1"
                                         ItemsSource="{Binding Users}" DisplayMemberPath="Name"
-                                        SelectedIndex="0"/>
+                                        SelectedItem="{Binding SelectedAdministrator}"/>
                                     <Button
                                         Grid.Column="2" Grid.Row="1"
-                                        Content="Add"/>
+                                        Content="Add"
+                                        Click="AddAdministratorButton_Click"/>
                                 </Grid>
                             </Grid>
 
