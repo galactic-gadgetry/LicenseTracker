@@ -1,7 +1,10 @@
 ﻿using LicenseTracker.Models;
+using LicenseTracker.Models.DTOs;
 using LicenseTracker.Stores;
+using LicenseTracker.UIComponents.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -10,6 +13,33 @@ namespace LicenseTracker.Services
 {
     static class SessionService
     {
+        /// <summary>
+        /// Adds the <see cref="Product"/> instance to the
+        /// <see cref="Session.Products"/> collection if valid.
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="product">Product to be added</param>
+        /// <returns>True if successful, fasle withe details
+        /// otherwise</returns>
+        public static (bool, string?) AddProductToSession(
+            Session session, Product product)
+        {
+            ArgumentNullException.ThrowIfNull(session, nameof(session));
+            ArgumentNullException.ThrowIfNull(product, nameof(product));
+
+            (bool result, string? detail) =
+                ProductService.IsProductUniqueInSession(
+                    session, product);
+
+            if (result)
+            {
+                session.Products.Add(product);
+                SortProductsCollection(session);
+            }
+
+            return (result, detail);
+        }
+
         /// <summary>
         /// Closes the session store's current session.
         /// </summary>
@@ -50,6 +80,28 @@ namespace LicenseTracker.Services
             return true;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the
+        /// <see cref="Product"/> class from the DTO, and adds it to
+        /// the <see cref="SessionStore.CurrentSession"/>'s Products
+        /// collection, if valid.
+        /// </summary>
+        /// <param name="sessionStore"></param>
+        /// <param name="dto">Data transfer object from which the
+        /// <see cref="Product"/> will be initialized</param>
+        /// <returns>True if successful, false with details
+        /// otherwise</returns>
+        public static (bool, string?) CreateNewProductInCurrentSession(
+            SessionStore sessionStore, ProductDTO dto)
+        {
+            ArgumentNullException.ThrowIfNull(sessionStore, nameof(sessionStore));
+            ArgumentNullException.ThrowIfNull(dto, nameof(dto));
+
+            Product product = ProductService.CreateNewProduct(dto);
+            return
+                AddProductToSession(sessionStore.CurrentSession, product);
+        }
+
 
         public static Session GetNewSession()
         {
@@ -85,6 +137,35 @@ namespace LicenseTracker.Services
             // This is where we would return any errors that might
             // arise during save attempts.
             return (true, string.Empty);
+        }
+
+        /// <summary>
+        /// Sorts the <see cref="Session.Products"/> collection by
+        /// the <see cref="Product.Name"/> property, then sets the
+        /// "None" dummy Product in the zeroeth index.
+        /// </summary>
+        /// <param name="session"></param>
+        /// <exception cref="KeyNotFoundException">Thrown if the
+        /// "None" dummy Product is not found</exception>
+        public static void SortProductsCollection(Session session)
+        {
+            ArgumentNullException.ThrowIfNull(session, nameof(session));
+
+            ObservableCollection<Product> products = session.Products;
+            products = new ObservableCollection<Product>(
+                products.OrderBy(p => p.Name).ToList());
+
+            // Return the "None" dummy project to the top of the
+            // list.
+            Product? noneProduct =
+                products.FirstOrDefault(p => p.Name == "None");
+            int index = 
+               noneProduct != null ? products.IndexOf(noneProduct) :
+               throw new KeyNotFoundException("The 'None' dummy " +
+               "Product instance was not found");
+            products.Move(index, 0);
+
+            session.Products = products;
         }
 
 

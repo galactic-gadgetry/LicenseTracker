@@ -11,6 +11,8 @@
             </Style>
 
             <Style TargetType="ComboBox" BasedOn="{StaticResource DefaultComboBoxStyle}">
+                <Setter Property="MinWidth" Value="100"/>
+                <Setter Property="MaxWidth" Value="200"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
 
@@ -24,7 +26,7 @@
             </Style>
 
             <Style TargetType="Label" BasedOn="{StaticResource DefaultLabelStyle}">
-                <Setter Property="Margin" Value="0,5"/>
+                <Setter Property="Margin" Value="0,5,10,5"/>
             </Style>
 
             <Style TargetType="TextBox" BasedOn="{StaticResource InputFieldTextBoxStyle}">
@@ -32,6 +34,11 @@
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
         </Style.Resources>
+    </Style>
+
+    <Style x:Key="InputFieldDialogScrollViewerStyle" TargetType="ScrollViewer">
+        <Setter Property="Padding" Value="0,0,10,0"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
     </Style>
     
 </ResourceDictionary>

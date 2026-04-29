@@ -4,18 +4,18 @@ using System.Text;
 
 namespace LicenseTracker.Models
 {
-    public enum LicenseStatus
+    public class LicenseItem
     {
-        Active,
-        Archived,
-        Expired,
-        Inactive,
-    }
+
+        public enum LicenseStatus
+        {
+            Active,
+            Archived,
+            Expired,
+            Inactive,
+        }
 
 
-
-    class LicenseItem
-    {
 
         public DateTime ExpirationDate { get; set; }
 

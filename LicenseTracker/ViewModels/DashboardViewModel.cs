@@ -24,6 +24,10 @@ namespace LicenseTracker.ViewModels
         private LicenseItem? selectedLicenseItem = null;
 
 
+
+        public Session CurrentSession =>
+            _sessionStore.CurrentSession;
+
         /// <summary>
         /// True if a license is selected by the user.
         /// </summary>
@@ -80,7 +84,7 @@ namespace LicenseTracker.ViewModels
             _sessionStore = sessionStore;
 
             // DELETE ME!!!!!!!!!!!!!!!
-            _sessionStore.CurrentSession.Licenses = Licenses;
+            //_sessionStore.CurrentSession.Licenses = Licenses;
 
             FilterUpdateButtonClickedCommand = new RelayCommand(
                 new Action<object?>(OnFilterUpdateButtonClicked));
@@ -100,7 +104,7 @@ namespace LicenseTracker.ViewModels
 
         private void OnNewLicenseButtonClicked(object? obj)
         {
-            DialogService.PromptUserWithNewLicenseDialog();
+            DialogService.PromptUserWithNewLicenseDialog(_sessionStore);
         }
 
 

@@ -13,5 +13,12 @@
         <Setter Property="SizeToContent" Value="WidthAndHeight"/>
         <Setter Property="ResizeMode" Value="CanResizeWithGrip"/>
     </Style>
+
+    <Style x:Key="AddItemDialogWindowStyle" TargetType="Window" BasedOn="{StaticResource DialogWindowStyle}">
+        <Setter Property="Height" Value="Auto"/>
+        <Setter Property="Width" Value="Auto"/>
+        <Setter Property="MinHeight" Value="0"/>
+        <Setter Property="MinWidth" Value="0"/>
+    </Style>
     
 </ResourceDictionary>
