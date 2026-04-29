@@ -46,7 +46,7 @@ namespace LicenseTracker.UIComponents.Dialogs
         private LicenseStatus selectedStatus;
         private User? selectedUser;
         private User? user;
-        private Vendor? vendor;
+        private Vendor? selectedVendor;
 
 
 
@@ -110,6 +110,17 @@ namespace LicenseTracker.UIComponents.Dialogs
             {
                 selectedUser = value;
                 OnPropertyChanged(nameof(SelectedUser));
+            }
+        }
+
+
+        public Vendor? SelectedVendor
+        {
+            get => selectedVendor;
+            set
+            {
+                selectedVendor = value;
+                OnPropertyChanged(nameof(SelectedVendor));
             }
         }
 
@@ -193,6 +204,24 @@ namespace LicenseTracker.UIComponents.Dialogs
         }
 
 
+        private void AddVendorButton_Click(object sender, RoutedEventArgs e)
+        {
+            CreateNewVendorDialog dlg =
+                DialogService.PromptUserWithNewVendorDialog(_sessionStore, this);
+
+            // If the Create New Vendor Dialog result is true,
+            // the new vendor was created, set the selected
+            // vendor of the combo box to the new vendor.
+            Vendor? newVendor = dlg.NewVendor;
+            if (newVendor != null)
+            {
+                SelectedVendor =
+                    Vendors.FirstOrDefault(v => v.Name == newVendor.Name);
+                ;
+            }
+        }
+
+
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
@@ -211,6 +240,7 @@ namespace LicenseTracker.UIComponents.Dialogs
             SelectedProduct = Products.FirstOrDefault(p => p.Name == "None");
             SelectedStatus = Statuses.FirstOrDefault(s => s == LicenseStatus.Active);
             SelectedUser = Users.FirstOrDefault(u => u.Name == "Unassigned");
+            SelectedVendor = Vendors.FirstOrDefault(v => v.Name == "None");
         }
 
 

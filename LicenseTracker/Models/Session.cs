@@ -48,7 +48,7 @@ namespace LicenseTracker.Models
 
         public ObservableCollection<Vendor> Vendors { get; set; } = new()
         {
-            new Vendor() { Name = "Unassigned" },
+            new Vendor() { Name = "None" },
         };
 
 

@@ -75,6 +75,24 @@ namespace LicenseTracker.Services
         }
 
         /// <summary>
+        /// Displays the <see cref="CreateNewVendorDialog"/> to the
+        /// user.
+        /// </summary>
+        /// <param name="sessionStore"></param>
+        /// <param name="owner"></param>
+        /// <returns></returns>
+        public static CreateNewVendorDialog PromptUserWithNewVendorDialog(
+            SessionStore sessionStore, Window owner)
+        {
+            CreateNewVendorDialog dlg = new(sessionStore);
+            dlg.Owner = owner;
+
+            dlg.ShowDialog();
+
+            return dlg;
+        }
+
+        /// <summary>
         /// Displays a save changes message box.
         /// </summary>
         /// <param name="sessionStore"></param>

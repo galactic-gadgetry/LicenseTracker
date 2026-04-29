@@ -236,10 +236,11 @@
                                     <ComboBox
                                         Grid.Column="1" Grid.Row="0"
                                         ItemsSource="{Binding Vendors}" DisplayMemberPath="Name"
-                                        SelectedIndex="0"/>
+                                        SelectedItem="{Binding SelectedVendor}"/>
                                     <Button
                                         Grid.Column="2" Grid.Row="0"
-                                        Content="Add"/>
+                                        Content="Add"
+                                        Click="AddVendorButton_Click"/>
 
                                     <!-- #Purchase Date -->
                                     <Label

@@ -3,6 +3,7 @@
 
 
     <Style x:Key="InputFieldDialogButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+        <Setter Property="MinWidth" Value="75"/>
         <Setter Property="Margin" Value="10,0,0,0"/>
     </Style>
 

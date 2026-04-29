@@ -68,6 +68,33 @@ namespace LicenseTracker.Services
         }
 
         /// <summary>
+        /// Adds the <see cref="Vendor"/> isntance to the
+        /// <see cref="Session.Vendors"/> collection if valid.
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="vendor">Vendor to be added</param>
+        /// <returns>True if successful, false with details
+        /// otherwise</returns>
+        public static (bool, string?) AddVendorToSession(
+            Session session, Vendor vendor)
+        {
+            ArgumentNullException.ThrowIfNull(session, nameof(session));
+            ArgumentNullException.ThrowIfNull(vendor, nameof(vendor));
+
+            (bool result, string? detail) =
+                VendorService.IsVendorUniqueInSession(
+                    session, vendor);
+
+            if (result)
+            {
+                session.Vendors.Add(vendor);
+                SortVendorsCollection(session);
+            }
+
+            return (result, detail);
+        }
+
+        /// <summary>
         /// Closes the session store's current session.
         /// </summary>
         /// <param name="sessionStore"></param>
@@ -149,6 +176,28 @@ namespace LicenseTracker.Services
             User user = UserService.CreateNewUser(dto);
             return
                 AddUserToSession(sessionStore.CurrentSession, user);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the
+        /// <see cref="Vendor"/> class from the DTO, and adds it to
+        /// the <see cref="SessionStore.CurrentSession"/>'s Vendors
+        /// collection, if valid.
+        /// </summary>
+        /// <param name="sessionStore"></param>
+        /// <param name="dto">Data transfer object from which the
+        /// <see cref="Vendor"/></param> will be initialized
+        /// <returns>True if successful, false with details
+        /// otherwise</returns>
+        public static (bool, string?) CreateNewVendorInCurrentSession(
+            SessionStore sessionStore, VendorDTO dto)
+        {
+            ArgumentNullException.ThrowIfNull(sessionStore, nameof(sessionStore));
+            ArgumentNullException.ThrowIfNull(dto, nameof(dto));
+
+            Vendor vendor = VendorService.CreateNewVendor(dto);
+            return
+                AddVendorToSession(sessionStore.CurrentSession, vendor);
         }
 
 
@@ -233,7 +282,7 @@ namespace LicenseTracker.Services
             users = new ObservableCollection<User>(
                 users.OrderBy(u => u.Name).ToList());
 
-            // Return the "unassigned" dummy user to the top of the
+            // Return the "Unassigned" dummy user to the top of the
             // collection.
             User? unassignedUser =
                 users.FirstOrDefault(u => u.Name == "Unassigned");
@@ -245,6 +294,35 @@ namespace LicenseTracker.Services
             users.Move(index, 0);
 
             session.Users = users;
+        }
+
+        /// <summary>
+        /// Sorts the <see cref="Session.Vendors"/> collection by
+        /// the <see cref="Vendor.Name"/> property, then sets the
+        /// "None" dummy Vendor in the zeroeth index.
+        /// </summary>
+        /// <param name="session"></param>
+        /// <exception cref="KeyNotFoundException">Thrown if the
+        /// "None" dummy User is not found</exception>
+        public static void SortVendorsCollection(Session session)
+        {
+            ArgumentNullException.ThrowIfNull(session, nameof(session));
+
+            ObservableCollection<Vendor> vendors = session.Vendors;
+            vendors = new ObservableCollection<Vendor>(
+                vendors.OrderBy(v => v.Name).ToList());
+
+            // Return the "None" dummy vendor to the top of the
+            // collection.
+            Vendor? noneVendor =
+                vendors.FirstOrDefault(v => v.Name == "None");
+            int index =
+                noneVendor != null ? vendors.IndexOf(noneVendor) :
+                throw new KeyNotFoundException("The 'None' dummy " +
+                "Vendor instance was not found");
+            vendors.Move(index, 0);
+
+            session.Vendors = vendors;
         }
 
 
