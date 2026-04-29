@@ -19,7 +19,7 @@ namespace LicenseTracker.Services
         /// </summary>
         /// <param name="session"></param>
         /// <param name="product">Product to be added</param>
-        /// <returns>True if successful, fasle withe details
+        /// <returns>True if successful, false with details
         /// otherwise</returns>
         public static (bool, string?) AddProductToSession(
             Session session, Product product)
@@ -35,6 +35,33 @@ namespace LicenseTracker.Services
             {
                 session.Products.Add(product);
                 SortProductsCollection(session);
+            }
+
+            return (result, detail);
+        }
+
+        /// <summary>
+        /// Adds the <see cref="User"/> instance to the
+        /// <see cref="Session.Users"/> collection if valid.
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="user">User to be added</param>
+        /// <returns>True if successful, false with details
+        /// otherwise</returns>
+        public static (bool, string?) AddUserToSession(
+            Session session, User user)
+        {
+            ArgumentNullException.ThrowIfNull(session, nameof(session));
+            ArgumentNullException.ThrowIfNull(user, nameof(user));
+
+            (bool result, string? detail) =
+                UserService.IsUserUniqueInSession(
+                    session, user);
+
+            if (result)
+            {
+                session.Users.Add(user);
+                SortUsersCollection(session);
             }
 
             return (result, detail);
@@ -102,6 +129,28 @@ namespace LicenseTracker.Services
                 AddProductToSession(sessionStore.CurrentSession, product);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the
+        /// <see cref="User"/> class from the DTO, and adds it to
+        /// the <see cref="SessionStore.CurrentSession"/>'s Users
+        /// collection, if valid.
+        /// </summary>
+        /// <param name="sessionStore"></param>
+        /// <param name="dto">Data transfer object from which the
+        /// <see cref="User"/></param> will be initialized
+        /// <returns>True if successful, false with details
+        /// otherwise</returns>
+        public static (bool, string?) CreateNewUserInCurrentSession(
+            SessionStore sessionStore, UserDTO dto)
+        {
+            ArgumentNullException.ThrowIfNull(sessionStore, nameof(sessionStore));
+            ArgumentNullException.ThrowIfNull(dto, nameof(dto));
+
+            User user = UserService.CreateNewUser(dto);
+            return
+                AddUserToSession(sessionStore.CurrentSession, user);
+        }
+
 
         public static Session GetNewSession()
         {
@@ -155,8 +204,8 @@ namespace LicenseTracker.Services
             products = new ObservableCollection<Product>(
                 products.OrderBy(p => p.Name).ToList());
 
-            // Return the "None" dummy project to the top of the
-            // list.
+            // Return the "None" dummy product to the top of the
+            // collection.
             Product? noneProduct =
                 products.FirstOrDefault(p => p.Name == "None");
             int index = 
@@ -166,6 +215,36 @@ namespace LicenseTracker.Services
             products.Move(index, 0);
 
             session.Products = products;
+        }
+
+        /// <summary>
+        /// Sorts the <see cref="Session.Users"/> collection by
+        /// the <see cref="User.Name"/> property, then sets the
+        /// "Unassigned" dummy User in the zeroeth index.
+        /// </summary>
+        /// <param name="session"></param>
+        /// <exception cref="KeyNotFoundException">Thrown if the
+        /// "Unassigned" dummy User is not found</exception>
+        public static void SortUsersCollection(Session session)
+        {
+            ArgumentNullException.ThrowIfNull(session, nameof(session));
+
+            ObservableCollection<User> users = session.Users;
+            users = new ObservableCollection<User>(
+                users.OrderBy(u => u.Name).ToList());
+
+            // Return the "unassigned" dummy user to the top of the
+            // collection.
+            User? unassignedUser =
+                users.FirstOrDefault(u => u.Name == "Unassigned");
+            int index =
+                unassignedUser != null ?
+                users.IndexOf(unassignedUser) :
+                throw new KeyNotFoundException("The 'Unassigned' " +
+                "dummy user was not found");
+            users.Move(index, 0);
+
+            session.Users = users;
         }
 
 

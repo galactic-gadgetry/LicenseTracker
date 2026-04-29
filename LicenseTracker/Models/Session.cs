@@ -42,13 +42,13 @@ namespace LicenseTracker.Models
 
         public ObservableCollection<User> Users { get; set; } = new()
         {
-            new User() { Name = "None" },
+            new User() { Name = "Unassigned" },
         };
 
 
         public ObservableCollection<Vendor> Vendors { get; set; } = new()
         {
-            new Vendor() { Name = "None" },
+            new Vendor() { Name = "Unassigned" },
         };
 
 

@@ -40,11 +40,11 @@ namespace LicenseTracker.UIComponents.Dialogs
         private User? administrator;
         private DateTime? expirationDate;
         private DateTime? issueDate;
-        private string numberOrID = string.Empty;
         private string? product = string.Empty;
         private DateTime? purchaseDate;
         private Product? selectedProduct = null;
-        private LicenseStatus status = LicenseStatus.Active;
+        private LicenseStatus selectedStatus;
+        private User? selectedUser;
         private User? user;
         private Vendor? vendor;
 
@@ -63,7 +63,7 @@ namespace LicenseTracker.UIComponents.Dialogs
         public DateTime? IssueDate { get; set; }
 
 
-        public string NumberOrID { get; set; }
+        public string NumberOrID { get; set; } = string.Empty;
 
 
         public ObservableCollection<Product> Products =>
@@ -84,7 +84,26 @@ namespace LicenseTracker.UIComponents.Dialogs
         }
 
 
-        public LicenseStatus SelectedStatus { get; set; }
+        public LicenseStatus SelectedStatus
+        {
+            get => selectedStatus;
+            set
+            {
+                selectedStatus = value;
+                OnPropertyChanged(nameof(SelectedStatus));
+            }
+        }
+
+
+        public User? SelectedUser
+        {
+            get => selectedUser;
+            set
+            {
+                selectedUser = value;
+                OnPropertyChanged(nameof(SelectedUser));
+            }
+        }
 
 
         public IEnumerable<LicenseStatus> Statuses =>
@@ -127,8 +146,30 @@ namespace LicenseTracker.UIComponents.Dialogs
             if (newProduct != null)
             {
                 SelectedProduct =
-                    CurrentSession.Products.FirstOrDefault(p => p.Name == newProduct.Name);
+                    Products.FirstOrDefault(p => p.Name == newProduct.Name);
             }
+        }
+
+
+        private void AddUserButton_Click(object sender, RoutedEventArgs e)
+        {
+            CreateNewUserDialog dlg = DialogService.PromptUserWithNewUserDialog(_sessionStore, this);
+
+            // If the Create New User Dialog result is true,
+            // the new user was created, set the selected user
+            // of the combo box to the new user.
+            User? newUser = dlg.NewUser;
+            if (newUser != null)
+            {
+                SelectedUser =
+                    Users.FirstOrDefault(u => u.Name == newUser.Name);
+            }
+        }
+
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
 
@@ -141,6 +182,8 @@ namespace LicenseTracker.UIComponents.Dialogs
         private void InitializeInputFields()
         {
             SelectedProduct = Products.FirstOrDefault(p => p.Name == "None");
+            SelectedStatus = Statuses.FirstOrDefault(s => s == LicenseStatus.Active);
+            SelectedUser = Users.FirstOrDefault(u => u.Name == "Unassigned");
         }
 
 

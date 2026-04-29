@@ -44,11 +44,29 @@ namespace LicenseTracker.Services
         /// </summary>
         /// <param name="sessionStore"></param>
         /// <param name="owner"></param>
-        /// <returns>The Create New Product Dialog</returns>
+        /// <returns></returns>
         public static CreateNewProductDialog PromptUserWithNewProductDialog(
             SessionStore sessionStore, Window owner)
         {
             CreateNewProductDialog dlg = new(sessionStore);
+            dlg.Owner = owner;
+
+            dlg.ShowDialog();
+
+            return dlg;
+        }
+
+        /// <summary>
+        /// Displays the <see cref="CreateNewUserDialog"/> to the
+        /// user.
+        /// </summary>
+        /// <param name="sessionStore"></param>
+        /// <param name="owner"></param>
+        /// <returns></returns>
+        public static CreateNewUserDialog PromptUserWithNewUserDialog(
+            SessionStore sessionStore, Window owner)
+        {
+            CreateNewUserDialog dlg = new(sessionStore);
             dlg.Owner = owner;
 
             dlg.ShowDialog();

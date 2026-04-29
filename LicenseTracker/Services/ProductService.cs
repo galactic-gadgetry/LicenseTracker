@@ -55,7 +55,7 @@ namespace LicenseTracker.Services
             ArgumentNullException.ThrowIfNull(product, nameof(product));
 
             // If any details in any of the collection's existing
-            // projects conflict with the passed product, return
+            // products conflict with the passed product, return
             // false.
             foreach (Product p in collection)
             {

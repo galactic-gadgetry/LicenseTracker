@@ -17,9 +17,9 @@ using System.Windows.Shapes;
 namespace LicenseTracker.UIComponents.Dialogs
 {
     /// <summary>
-    /// Interaction logic for CreateNewProductDialog.xaml
+    /// Interaction logic for CreateNewUserDialog.xaml
     /// </summary>
-    public partial class CreateNewProductDialog : Window
+    public partial class CreateNewUserDialog : Window
     {
         /// <summary>
         /// Used to manage the app's session state.
@@ -28,9 +28,9 @@ namespace LicenseTracker.UIComponents.Dialogs
 
 
         /// <summary>
-        /// New Product instance created, if successful.
+        /// New User instance created, if successful.
         /// </summary>
-        public Product? NewProduct = null;
+        public User? NewUser = null;
 
         /// <summary>
         /// Text for the Name text box.
@@ -40,10 +40,10 @@ namespace LicenseTracker.UIComponents.Dialogs
 
         /// <summary>
         /// Initializes a new instance of the
-        /// <seealso cref="CreateNewProductDialog"/> class.
+        /// <seealso cref="CreateNewUserDialog"/> class.
         /// </summary>
         /// <param name="sessionStore"></param>
-        public CreateNewProductDialog(SessionStore sessionStore)
+        public CreateNewUserDialog(SessionStore sessionStore)
         {
             _sessionStore = sessionStore;
             DataContext = this;
@@ -59,30 +59,30 @@ namespace LicenseTracker.UIComponents.Dialogs
         /// <param name="e"></param>
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            if (AddProductRequested())
+            if (AddUserRequested())
             {
                 DialogResult = true;
             }
         }
 
         /// <summary>
-        /// Creates and adds the new Product to the current
-        /// session's Products collection, if valid.
+        /// Creates and adds the new User to the current session's
+        /// Users collection, if valid.
         /// </summary>
         /// <returns></returns>
-        private bool AddProductRequested()
+        private bool AddUserRequested()
         {
-            ProductDTO dto = new() { Name = NameText };
+            UserDTO dto = new() { Name = NameText };
 
             (bool result, string? detail) =
-                SessionService.CreateNewProductInCurrentSession(
+                SessionService.CreateNewUserInCurrentSession(
                     _sessionStore, dto);
             if (!result)
             {
-                string caption = "Product Conflict Error";
-                string message = $"The selected {detail} is assigned " +
-                    $"to another product. Product {detail} must be " +
-                    $"unique.";
+                string caption = "User Conflict Error";
+                string message = $"The selected {detail} is " +
+                    $"assigned to another user. User {detail} must " +
+                    $"be unique.";
                 DialogService.PromptUserWithErrorMessageWithOKButtonDialog(
                     caption, message);
 
@@ -92,9 +92,9 @@ namespace LicenseTracker.UIComponents.Dialogs
             }
             else
             {
-                NewProduct =
-                    _sessionStore.CurrentSession.Products.
-                    FirstOrDefault(p => p.Name == NameText);
+                NewUser =
+                    _sessionStore.CurrentSession.Users.
+                    FirstOrDefault(u => u.Name == NameText);
 
                 return true;
             }
