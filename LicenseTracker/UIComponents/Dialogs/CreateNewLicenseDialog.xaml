@@ -136,13 +136,13 @@
                                     <Label
                                         Grid.Column="0" Grid.Row="2"
                                         Content="Issue Date:"/>
-                                    <DatePicker Grid.Column="1" Grid.Row="2" SelectedDate="{Binding IssueDate}"/>
+                                    <DatePicker Grid.Column="1" Grid.Row="2" SelectedDate="{Binding SelectedIssueDate}"/>
 
                                     <!-- #Expiration Date -->
                                     <Label
                                         Grid.Column="0" Grid.Row="3"
                                         Content="Expiration Date:"/>
-                                    <DatePicker Grid.Column="1" Grid.Row="3" SelectedDate="{Binding ExpirationDate}"/>
+                                    <DatePicker Grid.Column="1" Grid.Row="3" SelectedDate="{Binding SelectedExpirationDate}"/>
 
                                     <!-- #Status -->
                                     <Label
@@ -246,7 +246,7 @@
                                     <Label
                                         Grid.Column="0" Grid.Row="1"
                                         Content="Purchase Date:"/>
-                                    <DatePicker Grid.Column="1" Grid.Row="1" SelectedDate="{Binding PurchaseDate}"/>
+                                    <DatePicker Grid.Column="1" Grid.Row="1" SelectedDate="{Binding SelectedPurchaseDate}"/>
                                 </Grid>
                             </Grid>
                         </StackPanel>
@@ -259,10 +259,8 @@
                         <StackPanel.Resources>
                             <Style TargetType="Button" BasedOn="{StaticResource InputFieldDialogButtonStyle}"/>
                         </StackPanel.Resources>
-                        <Button Content="Create"/>
-                        <Button
-                            Content="Cancel"
-                            Click="CancelButton_Click"/>
+                        <Button Content="Create" Click="CreateButton_Click"/>
+                        <Button Content="Cancel" Click="CancelButton_Click"/>
                     </StackPanel>
                 </Border>
             </Grid>

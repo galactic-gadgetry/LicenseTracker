@@ -1,4 +1,5 @@
 ﻿using LicenseTracker.Models;
+using LicenseTracker.Models.DTOs;
 using LicenseTracker.Services;
 using LicenseTracker.Stores;
 using System;
@@ -23,34 +24,33 @@ namespace LicenseTracker.UIComponents.Dialogs
     /// </summary>
     public partial class CreateNewLicenseDialog : Window, INotifyPropertyChanged
     {
-        public enum LicenseStatus
-        {
-            Active,
-            Expired,
-            Archived,
-            Removed,
-        }
-
-
-
         private readonly SessionStore _sessionStore;
 
 
         // Backing Fields
-        private User? selectedAdministrator;
-        private DateTime? expirationDate;
-        private DateTime? issueDate;
-        private string? product = string.Empty;
-        private DateTime? purchaseDate;
-        private Product? selectedProduct = null;
-        private LicenseStatus selectedStatus;
-        private User? selectedUser;
-        private User? user;
-        private Vendor? selectedVendor;
+        private User selectedAdministrator = default!;
+        private DateTime? selectedExpirationDate = null;
+        private DateTime? selectedIssueDate = null;
+        private Product selectedProduct = default!;
+        private DateTime? selectedPurchaseDate = null;
+        private LicenseItem.LicenseStatus selectedStatus;
+        private User selectedUser = default!;
+        private Vendor selectedVendor = default!;
 
 
 
-        public User? SelectedAdministrator
+        public Session CurrentSession =>
+            _sessionStore.CurrentSession;
+
+
+        public string NumberOrID { get; set; } = string.Empty;
+
+
+        public ObservableCollection<Product> Products =>
+            CurrentSession.Products;
+
+
+        public User SelectedAdministrator
         {
             get => selectedAdministrator;
             set
@@ -61,27 +61,29 @@ namespace LicenseTracker.UIComponents.Dialogs
         }
 
 
-        public Session CurrentSession =>
-            _sessionStore.CurrentSession;
+        public DateTime? SelectedExpirationDate
+        {
+            get => selectedExpirationDate;
+            set
+            {
+                selectedExpirationDate = value;
+                OnPropertyChanged(nameof(SelectedExpirationDate));
+            }
+        }
 
 
-        public DateTime? ExpirationDate { get; set; }
+        public DateTime? SelectedIssueDate
+        {
+            get => selectedIssueDate;
+            set
+            {
+                selectedIssueDate = value;
+                OnPropertyChanged(nameof(SelectedIssueDate));
+            }
+        }
 
 
-        public DateTime? IssueDate { get; set; }
-
-
-        public string NumberOrID { get; set; } = string.Empty;
-
-
-        public ObservableCollection<Product> Products =>
-            CurrentSession.Products;
-
-
-        public DateTime? PurchaseDate { get; set; }
-
-
-        public Product? SelectedProduct
+        public Product SelectedProduct
         {
             get => selectedProduct;
             set
@@ -92,7 +94,18 @@ namespace LicenseTracker.UIComponents.Dialogs
         }
 
 
-        public LicenseStatus SelectedStatus
+        public DateTime? SelectedPurchaseDate
+        {
+            get => selectedPurchaseDate;
+            set
+            {
+                selectedPurchaseDate = value;
+                OnPropertyChanged(nameof(SelectedPurchaseDate));
+            }
+        }
+
+
+        public LicenseItem.LicenseStatus SelectedStatus
         {
             get => selectedStatus;
             set
@@ -103,7 +116,7 @@ namespace LicenseTracker.UIComponents.Dialogs
         }
 
 
-        public User? SelectedUser
+        public User SelectedUser
         {
             get => selectedUser;
             set
@@ -114,7 +127,7 @@ namespace LicenseTracker.UIComponents.Dialogs
         }
 
 
-        public Vendor? SelectedVendor
+        public Vendor SelectedVendor
         {
             get => selectedVendor;
             set
@@ -125,8 +138,9 @@ namespace LicenseTracker.UIComponents.Dialogs
         }
 
 
-        public IEnumerable<LicenseStatus> Statuses =>
-            Enum.GetValues(typeof(LicenseStatus)).Cast<LicenseStatus>();
+        public IEnumerable<LicenseItem.LicenseStatus> Statuses =>
+            Enum.GetValues(typeof(LicenseItem.LicenseStatus)).
+            Cast<LicenseItem.LicenseStatus>();
 
 
         public ObservableCollection<User> Users =>
@@ -224,6 +238,49 @@ namespace LicenseTracker.UIComponents.Dialogs
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
+            DialogResult = false;
+        }
+
+
+        private void CreateButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (CreateLicenseItemRequested())
+            {
+                DialogResult = true;
+            }
+        }
+
+
+        private bool CreateLicenseItemRequested()
+        {
+            LicenseItemDTO dto = new()
+            {
+                Administrator = SelectedAdministrator,
+                ExpirationDate = SelectedExpirationDate,
+                IssueDate = SelectedIssueDate,
+                LicenseId = NumberOrID,
+                Product = SelectedProduct,
+                PurchaseDate = SelectedPurchaseDate,
+                Status = SelectedStatus,
+                User = SelectedUser,
+                Vendor = SelectedVendor,
+            };
+
+            (bool result, string? detail) =
+                SessionService.CreateNewLicenseItemInCurrentSession(
+                    _sessionStore, dto);
+            if (!result)
+            {
+                string caption = "License Conflict Error";
+                string message = $"The selected {detail} is " +
+                    $"assigned to another license. License " +
+                    $"{detail} must be unique.";
+                DialogService.PromptUserWithErrorMessageWithOKButtonDialog(
+                    caption, message);
+
+                return false;
+            }
+
             throw new NotImplementedException();
         }
 
@@ -238,7 +295,7 @@ namespace LicenseTracker.UIComponents.Dialogs
         {
             SelectedAdministrator = Users.FirstOrDefault(u => u.Name == "Unassigned");
             SelectedProduct = Products.FirstOrDefault(p => p.Name == "None");
-            SelectedStatus = Statuses.FirstOrDefault(s => s == LicenseStatus.Active);
+            SelectedStatus = Statuses.FirstOrDefault(s => s == LicenseItem.LicenseStatus.Active);
             SelectedUser = Users.FirstOrDefault(u => u.Name == "Unassigned");
             SelectedVendor = Vendors.FirstOrDefault(v => v.Name == "None");
         }

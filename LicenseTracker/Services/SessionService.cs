@@ -13,6 +13,26 @@ namespace LicenseTracker.Services
 {
     static class SessionService
     {
+
+        public static (bool, string?) AddLicenseItemToSession(
+            Session session, LicenseItem license)
+        {
+            ArgumentNullException.ThrowIfNull(session, nameof(session));
+            ArgumentNullException.ThrowIfNull(license, nameof(license));
+
+            (bool result, string? detail) =
+                LicenseItemService.IsLicenseItemUniqueInSession(
+                    session, license);
+
+            if (result)
+            {
+                session.Licenses.Add(license);
+                SortLicensesCollection(session);
+            }
+
+            return (result, detail);
+        }
+
         /// <summary>
         /// Adds the <see cref="Product"/> instance to the
         /// <see cref="Session.Products"/> collection if valid.
@@ -134,6 +154,20 @@ namespace LicenseTracker.Services
             return true;
         }
 
+
+        public static (bool, string?) CreateNewLicenseItemInCurrentSession(
+            SessionStore sessionStore, LicenseItemDTO dto)
+        {
+            ArgumentNullException.ThrowIfNull(sessionStore, nameof(sessionStore));
+            ArgumentNullException.ThrowIfNull(dto, nameof(dto));
+
+            LicenseItem license =
+                LicenseItemService.CreateNewLicenseItem(dto);
+            return
+                AddLicenseItemToSession(
+                    sessionStore.CurrentSession, license);
+        }
+
         /// <summary>
         /// Initializes a new instance of the
         /// <see cref="Product"/> class from the DTO, and adds it to
@@ -237,6 +271,17 @@ namespace LicenseTracker.Services
             return (true, string.Empty);
         }
 
+
+        public static void SortLicensesCollection(Session session)
+        {
+            ArgumentNullException.ThrowIfNull(session, nameof(session));
+
+            ObservableCollection<LicenseItem> licenses = new(
+                session.Licenses.OrderBy(l => l.LicenseId).ToList());
+
+            session.Licenses = licenses;
+        }
+
         /// <summary>
         /// Sorts the <see cref="Session.Products"/> collection by
         /// the <see cref="Product.Name"/> property, then sets the
@@ -249,9 +294,8 @@ namespace LicenseTracker.Services
         {
             ArgumentNullException.ThrowIfNull(session, nameof(session));
 
-            ObservableCollection<Product> products = session.Products;
-            products = new ObservableCollection<Product>(
-                products.OrderBy(p => p.Name).ToList());
+            ObservableCollection<Product> products = new ObservableCollection<Product>(
+                session.Products.OrderBy(p => p.Name).ToList());
 
             // Return the "None" dummy product to the top of the
             // collection.
@@ -278,9 +322,8 @@ namespace LicenseTracker.Services
         {
             ArgumentNullException.ThrowIfNull(session, nameof(session));
 
-            ObservableCollection<User> users = session.Users;
-            users = new ObservableCollection<User>(
-                users.OrderBy(u => u.Name).ToList());
+            ObservableCollection<User> users = new ObservableCollection<User>(
+                session.Users.OrderBy(u => u.Name).ToList());
 
             // Return the "Unassigned" dummy user to the top of the
             // collection.
@@ -308,9 +351,8 @@ namespace LicenseTracker.Services
         {
             ArgumentNullException.ThrowIfNull(session, nameof(session));
 
-            ObservableCollection<Vendor> vendors = session.Vendors;
-            vendors = new ObservableCollection<Vendor>(
-                vendors.OrderBy(v => v.Name).ToList());
+            ObservableCollection<Vendor> vendors = new ObservableCollection<Vendor>(
+                session.Vendors.OrderBy(v => v.Name).ToList());
 
             // Return the "None" dummy vendor to the top of the
             // collection.
