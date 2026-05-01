@@ -30,7 +30,14 @@ namespace LicenseTracker.Services
             return license;
         }
 
-
+        /// <summary>
+        /// Determines if the <see cref="LicenseItem"/> properties
+        /// are unique in the collection.
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="license"></param>
+        /// <returns>True if unique, false with details
+        /// otherwise</returns>
         public static (bool, string?) IsLicenseItemUniqueInCollection(
             IEnumerable<LicenseItem> collection, LicenseItem license)
         {
@@ -52,7 +59,15 @@ namespace LicenseTracker.Services
             return (true, null);
         }
 
-
+        /// <summary>
+        /// Determines if the <see cref="LicenseItem"/> properties
+        /// are unique in the <see cref="Session.Licenses"/>
+        /// collection.
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="license"></param>
+        /// <returns>True if unique, false with details
+        /// otherwise</returns>
         public static (bool, string?) IsLicenseItemUniqueInSession(
             Session session, LicenseItem license)
         {

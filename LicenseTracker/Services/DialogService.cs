@@ -3,6 +3,7 @@ using LicenseTracker.Stores;
 using LicenseTracker.UIComponents.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices.ActiveDirectory;
 using System.Text;
 using System.Windows;
 
@@ -29,13 +30,17 @@ namespace LicenseTracker.Services
         /// user.
         /// </summary>
         /// <param name="sessionStore"></param>
-        public static void PromptUserWithNewLicenseDialog(SessionStore sessionStore)
+        /// <returns>True if license was created, false
+        /// otherwise</returns>
+        public static bool PromptUserWithNewLicenseDialog(SessionStore sessionStore)
         {
             CreateNewLicenseDialog dlg = new(sessionStore);
             Window mainWindow = Application.Current.MainWindow;
             dlg.Owner = mainWindow;
 
             dlg.ShowDialog();
+
+            return dlg.DialogResult ?? false;
         }
 
         /// <summary>

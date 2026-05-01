@@ -104,13 +104,16 @@ namespace LicenseTracker.ViewModels
 
         private void OnNewLicenseButtonClicked(object? obj)
         {
-            DialogService.PromptUserWithNewLicenseDialog(_sessionStore);
+            bool result =
+                DialogService.PromptUserWithNewLicenseDialog(
+                    _sessionStore);
         }
 
 
         private void OnSaveButtonClicked(object? obj)
         {
-            (bool, string) result = SessionService.SaveCurrentSession(_sessionStore);
+            (bool, string) result =
+                SessionService.SaveCurrentSession(_sessionStore);
             if (result.Item1)
             {
                 OnInfoUpdated("Session saved");

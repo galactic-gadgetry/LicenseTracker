@@ -13,7 +13,14 @@ namespace LicenseTracker.Services
 {
     static class SessionService
     {
-
+        /// <summary>
+        /// Adds the <see cref="LicenseItem"/> instance to the
+        /// <see cref="Session.Licenses"/> collection if valid.
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="license">LicenseItem to be added</param>
+        /// <returns>True if successful, false with details
+        /// otherwise</returns>
         public static (bool, string?) AddLicenseItemToSession(
             Session session, LicenseItem license)
         {
@@ -154,7 +161,18 @@ namespace LicenseTracker.Services
             return true;
         }
 
-
+        /// <summary>
+        /// Initializes a new instasnce of the
+        /// <see cref="LicenseItem"/> class from the DTO, and adds
+        /// it to the <see cref="SessionStore.CurrentSession"/>
+        /// Licenses collection, if valid.
+        /// </summary>
+        /// <param name="sessionStore"></param>
+        /// <param name="dto">Data transfer object from which the
+        /// <see cref="LicenseItem"/></param> will be
+        /// initialized
+        /// <returns>True if successful, false with details
+        /// otherwise</returns>
         public static (bool, string?) CreateNewLicenseItemInCurrentSession(
             SessionStore sessionStore, LicenseItemDTO dto)
         {
@@ -271,7 +289,7 @@ namespace LicenseTracker.Services
             return (true, string.Empty);
         }
 
-
+        
         public static void SortLicensesCollection(Session session)
         {
             ArgumentNullException.ThrowIfNull(session, nameof(session));
