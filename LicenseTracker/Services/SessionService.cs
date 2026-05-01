@@ -255,7 +255,31 @@ namespace LicenseTracker.Services
 
         public static Session GetNewSession()
         {
-            return new Session();
+            Session session = new();
+
+            InitializeSessionCollections(session);
+
+            return session;
+        }
+
+
+        public static void InitializeSessionCollections(Session session)
+        {
+            if (!session.Products.Any(p => p.Name == "None"))
+            {
+                AddProductToSession(
+                    session, new Product() { Name = "None" });
+            }
+            if (!session.Users.Any(u => u.Name == "Unassigned"))
+            {
+                AddUserToSession(
+                    session, new User() { Name = "Unassigned" });
+            }
+            if (!session.Vendors.Any(v => v.Name == "None"))
+            {
+                AddVendorToSession(
+                    session, new Vendor() { Name = "None" });
+            }
         }
 
         /// <summary>

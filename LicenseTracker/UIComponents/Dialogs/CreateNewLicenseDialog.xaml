@@ -115,6 +115,7 @@
                                         Content="Product:"/>
                                     <ComboBox
                                         Grid.Row="0" Grid.ColumnSpan="2"
+                                        x:Name="ProductComboBox"
                                         ItemsSource="{Binding Products}" DisplayMemberPath="Name"
                                         SelectedItem="{Binding SelectedProduct}"
                                         Margin="103,9,0,0"

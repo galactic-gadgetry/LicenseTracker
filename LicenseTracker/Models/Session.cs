@@ -34,22 +34,13 @@ namespace LicenseTracker.Models
         public ObservableCollection<LicenseItem> Licenses { get; set; } = new();
 
 
-        public ObservableCollection<Product> Products { get; set; } = new()
-        {
-            new Product() { Name = "None" },
-        };
+        public ObservableCollection<Product> Products { get; set;  } = new();
 
 
-        public ObservableCollection<User> Users { get; set; } = new()
-        {
-            new User() { Name = "Unassigned" },
-        };
+        public ObservableCollection<User> Users { get; set; } = new();
 
 
-        public ObservableCollection<Vendor> Vendors { get; set; } = new()
-        {
-            new Vendor() { Name = "None" },
-        };
+        public ObservableCollection<Vendor> Vendors { get; set; } = new();
 
 
 

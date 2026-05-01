@@ -208,6 +208,8 @@ namespace LicenseTracker.UIComponents.Dialogs
 
             InitializeInputFields();
 
+            Products.CollectionChanged += OnProductsChanged;
+
             InitializeComponent();
         }
 
@@ -378,6 +380,12 @@ namespace LicenseTracker.UIComponents.Dialogs
             SelectedStatus = Statuses.FirstOrDefault(s => s == LicenseItem.LicenseStatus.Active)!;
             SelectedUser = Users.FirstOrDefault(u => u.Name == "Unassigned")!;
             SelectedVendor = Vendors.FirstOrDefault(v => v.Name == "None")!;
+        }
+
+
+        private void OnProductsChanged(object sender, EventArgs e)
+        {
+            ProductComboBox.Items.Refresh();
         }
 
         /// <summary>
