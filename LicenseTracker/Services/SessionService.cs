@@ -34,7 +34,7 @@ namespace LicenseTracker.Services
             if (result)
             {
                 session.Licenses.Add(license);
-                SortLicensesCollection(session);
+                //SortLicensesCollection(session);
             }
 
             return (result, detail);

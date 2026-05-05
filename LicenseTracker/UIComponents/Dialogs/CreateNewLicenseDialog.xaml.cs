@@ -208,8 +208,6 @@ namespace LicenseTracker.UIComponents.Dialogs
 
             InitializeInputFields();
 
-            Products.CollectionChanged += OnProductsChanged;
-
             InitializeComponent();
         }
 
@@ -221,7 +219,15 @@ namespace LicenseTracker.UIComponents.Dialogs
         /// <param name="e"></param>
         private void AddAdministratorButton_Click(object sender, RoutedEventArgs e)
         {
-            CreateNewUserDialog dlg = DialogService.PromptUserWithNewUserDialog(_sessionStore, this);
+            CreateNewUserDialog dlg =
+                DialogService.PromptUserWithNewUserDialog(_sessionStore, this);
+            // This bypasses an issue in which the Session's
+            // Users collection is actually reset after sorting
+            // (because ObservableCollection<T> cannot sort in place),
+            // so the ObservableCollection<T>.CollectionChanged event
+            // is not raised and we need to alert the UI to refresh
+            // the view to reflect the sorted collection.
+            OnPropertyChanged(nameof(Users));
 
             // If the Create New User Dialog result is true,
             // the new user was created, set the selected administrator
@@ -243,6 +249,13 @@ namespace LicenseTracker.UIComponents.Dialogs
         {
             CreateNewProductDialog dlg =
                 DialogService.PromptUserWithNewProductDialog(_sessionStore, this);
+            // This bypasses an issue in which the Session's
+            // Products collection is actually reset after sorting
+            // (because ObservableCollection<T> cannot sort in place),
+            // so the ObservableCollection<T>.CollectionChanged event
+            // is not raised and we need to alert the UI to refresh
+            // the view to reflect the sorted collection.
+            OnPropertyChanged(nameof(Products));
 
             // If the Create New Product Dialog result is true,
             // the new product was created, set the selected product
@@ -264,6 +277,13 @@ namespace LicenseTracker.UIComponents.Dialogs
         {
             CreateNewUserDialog dlg =
                 DialogService.PromptUserWithNewUserDialog(_sessionStore, this);
+            // This bypasses an issue in which the Session's
+            // Users collection is actually reset after sorting
+            // (because ObservableCollection<T> cannot sort in place),
+            // so the ObservableCollection<T>.CollectionChanged event
+            // is not raised and we need to alert the UI to refresh
+            // the view to reflect the sorted collection.
+            OnPropertyChanged(nameof(Users));
 
             // If the Create New User Dialog result is true,
             // the new user was created, set the selected user
@@ -285,6 +305,13 @@ namespace LicenseTracker.UIComponents.Dialogs
         {
             CreateNewVendorDialog dlg =
                 DialogService.PromptUserWithNewVendorDialog(_sessionStore, this);
+            // This bypasses an issue in which the Session's
+            // Vendors collection is actually reset after sorting
+            // (because ObservableCollection<T> cannot sort in place),
+            // so the ObservableCollection<T>.CollectionChanged event
+            // is not raised and we need to alert the UI to refresh
+            // the view to reflect the sorted collection.
+            OnPropertyChanged(nameof(Vendors));
 
             // If the Create New Vendor Dialog result is true,
             // the new vendor was created, set the selected
@@ -380,12 +407,6 @@ namespace LicenseTracker.UIComponents.Dialogs
             SelectedStatus = Statuses.FirstOrDefault(s => s == LicenseItem.LicenseStatus.Active)!;
             SelectedUser = Users.FirstOrDefault(u => u.Name == "Unassigned")!;
             SelectedVendor = Vendors.FirstOrDefault(v => v.Name == "None")!;
-        }
-
-
-        private void OnProductsChanged(object sender, EventArgs e)
-        {
-            ProductComboBox.Items.Refresh();
         }
 
         /// <summary>
