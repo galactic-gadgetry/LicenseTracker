@@ -165,54 +165,70 @@
                                 </Border>
 
                                 <Border Grid.Row="1" Visibility="{Binding IsLicenseSelected, Converter={StaticResource BoolToVis}}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
+                                    <StackPanel>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
 
-                                        <!-- #Product -->
-                                        <Label Grid.Column="0" Grid.Row="0" Content="Product:"/>
-                                        <Label Grid.Column="1" Grid.Row="0" Content="{Binding SelectedLicenseItem.Product.Name}"/>
+                                            <!-- #Product -->
+                                            <Label Grid.Column="0" Grid.Row="0" Content="Product:"/>
+                                            <Label Grid.Column="1" Grid.Row="0" Content="{Binding SelectedLicenseItem.Product.Name}"/>
 
-                                        <!-- #Number/ID -->
-                                        <Label Grid.Column="0" Grid.Row="1" Content="Number/ID:"/>
-                                        <Label Grid.Column="1" Grid.Row="1" Content="{Binding SelectedLicenseItem.LicenseId}"/>
+                                            <!-- #Number/ID -->
+                                            <Label Grid.Column="0" Grid.Row="1" Content="Number/ID:"/>
+                                            <Label Grid.Column="1" Grid.Row="1" Content="{Binding SelectedLicenseItem.LicenseId}"/>
 
-                                        <!-- #User -->
-                                        <Label Grid.Column="0" Grid.Row="2" Content="User:"/>
-                                        <Label Grid.Column="1" Grid.Row="2" Content="{Binding SelectedLicenseItem.User.Name}"/>
+                                            <!-- #User -->
+                                            <Label Grid.Column="0" Grid.Row="2" Content="User:"/>
+                                            <Label Grid.Column="1" Grid.Row="2" Content="{Binding SelectedLicenseItem.User.Name}"/>
 
-                                        <!-- #Issue Date -->
-                                        <Label Grid.Column="0" Grid.Row="3" Content="Issue Date:"/>
-                                        <Label Grid.Column="1" Grid.Row="3" Content="{Binding SelectedLicenseItem.IssueDate}" ContentStringFormat="MM/dd/yyyy"/>
+                                            <!-- #Issue Date -->
+                                            <Label Grid.Column="0" Grid.Row="3" Content="Issue Date:"/>
+                                            <Label Grid.Column="1" Grid.Row="3" Content="{Binding SelectedLicenseItem.IssueDate}" ContentStringFormat="MM/dd/yyyy"/>
 
-                                        <!-- #Expiration Date -->
-                                        <Label Grid.Column="0" Grid.Row="4" Content="Expiration Date:"/>
-                                        <Label Grid.Column="1" Grid.Row="4" Content="{Binding SelectedLicenseItem.ExpirationDate}" ContentStringFormat="MM/dd/yyyy"/>
+                                            <!-- #Expiration Date -->
+                                            <Label Grid.Column="0" Grid.Row="4" Content="Expiration Date:"/>
+                                            <Label Grid.Column="1" Grid.Row="4" Content="{Binding SelectedLicenseItem.ExpirationDate}" ContentStringFormat="MM/dd/yyyy"/>
 
-                                        <!-- #Status -->
-                                        <Label Grid.Column="0" Grid.Row="5" Content="Status:"/>
-                                        <Label Grid.Column="1" Grid.Row="5" Content="{Binding SelectedLicenseItem.Status}"/>
+                                            <!-- #Status -->
+                                            <Label Grid.Column="0" Grid.Row="5" Content="Status:"/>
+                                            <Label Grid.Column="1" Grid.Row="5" Content="{Binding SelectedLicenseItem.Status}"/>
                                         
-                                        <!-- #Vendor -->
-                                        <Label Grid.Column="0" Grid.Row="6" Content="Vendor:"/>
-                                        <Label Grid.Column="1" Grid.Row="6" Content="{Binding SelectedLicenseItem.Vendor.Name}"/>
+                                            <!-- #Vendor -->
+                                            <Label Grid.Column="0" Grid.Row="6" Content="Vendor:"/>
+                                            <Label Grid.Column="1" Grid.Row="6" Content="{Binding SelectedLicenseItem.Vendor.Name}"/>
                                         
-                                        <!-- #Purchase Date -->
-                                        <Label Grid.Column="0" Grid.Row="7" Content="Purchase Date:"/>
-                                        <Label Grid.Column="1" Grid.Row="7" Content="{Binding SelectedLicenseItem.PurchaseDate}" ContentStringFormat="MM/dd/yyyy"/>
-                                    </Grid>
+                                            <!-- #Purchase Date -->
+                                            <Label Grid.Column="0" Grid.Row="7" Content="Purchase Date:"/>
+                                            <Label Grid.Column="1" Grid.Row="7" Content="{Binding SelectedLicenseItem.PurchaseDate}" ContentStringFormat="MM/dd/yyyy"/>
+                                        </Grid>
+                                        
+                                        <!-- #Controls -->
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                            <StackPanel.Resources>
+                                                <Style TargetType="Button" BasedOn="{StaticResource InputFieldDialogButtonStyle}"/>
+                                            </StackPanel.Resources>
+                                            <Button
+                                                Content="Delete"
+                                                Style="{StaticResource DeleteButtonStyle}"
+                                                Command="{Binding LicenseInfoDeleteButtonClickedCommand}"/>
+                                            <Button
+                                                Content="Edit"
+                                                />
+                                        </StackPanel>
+                                    </StackPanel>
                                 </Border>
 
                                 <!-- #Metadata -->

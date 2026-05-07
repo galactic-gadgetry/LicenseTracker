@@ -85,7 +85,7 @@
                                 <TextBox
                                     Grid.Column="1"
                                     x:Name="NameTextBox"
-                                    Text="{Binding NameText}"/>
+                                    Text="{Binding NameText, UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                         </StackPanel>
                     </ScrollViewer>
@@ -97,7 +97,7 @@
                         <StackPanel.Resources>
                             <Style TargetType="Button" BasedOn="{StaticResource InputFieldDialogButtonStyle}"/>
                         </StackPanel.Resources>
-                        <Button Content="Add" Click="AddButton_Click"/>
+                        <Button Content="Add" Click="AddButton_Click" IsDefault="True"/>
                         <Button Content="Cancel" Click="CancelButton_Click"/>
                     </StackPanel>
                 </Border>

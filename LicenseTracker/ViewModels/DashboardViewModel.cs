@@ -67,6 +67,8 @@ namespace LicenseTracker.ViewModels
         /// </summary>
         public ICommand FilterUpdateButtonClickedCommand { get; }
 
+        public ICommand LicenseInfoDeleteButtonClickedCommand { get; }
+
         /// <summary>
         /// Executed when the New License button is clicked.
         /// </summary>
@@ -88,6 +90,8 @@ namespace LicenseTracker.ViewModels
 
             FilterUpdateButtonClickedCommand = new RelayCommand(
                 new Action<object?>(OnFilterUpdateButtonClicked));
+            LicenseInfoDeleteButtonClickedCommand = new RelayCommand(
+                new Action<object?>(OnLicenseInfoDeleteButtonClicked));
             NewLicenseButtonClickedCommand = new RelayCommand(
                 new Action<object?>(OnNewLicenseButtonClicked));
             SaveButtonClickedCommand = new RelayCommand(
@@ -98,6 +102,21 @@ namespace LicenseTracker.ViewModels
 
         private void OnFilterUpdateButtonClicked(object? obj)
         {
+            throw new NotImplementedException();
+        }
+
+
+        private void OnLicenseInfoDeleteButtonClicked(object? obj)
+        {
+            if (SelectedLicenseItem == null)
+            {
+                return;
+            }
+
+            bool result =
+                DialogService.PromptUserWithDeleteConfirmationMessage(
+                    SelectedLicenseItem);
+
             throw new NotImplementedException();
         }
 

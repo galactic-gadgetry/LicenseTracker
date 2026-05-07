@@ -23,6 +23,8 @@
 
     <Color x:Key="TextFillColorPrimary100">#000000</Color>
 
+    <Color x:Key="TextFillColorSecdondary100">#FFFFFF</Color>
+
     <Color x:Key="WindowBackgroundPrimary100">#FFFFFF</Color>
     
     
@@ -35,10 +37,14 @@
 
 
     <!-- #Buttons -->
+    <SolidColorBrush x:Key="ButtonAlertMouseOverBackground" Color="{StaticResource AlertColor100}"/>
+    <SolidColorBrush x:Key="ButtonAlertMouseOverForeground" Color="{StaticResource TextFillColorSecdondary100}"/>
+    <SolidColorBrush x:Key="ButtonAlertPressedBackground" Color="{StaticResource AlertColor90}"/>
+    <SolidColorBrush x:Key="ButtonAlertPressedForeground" Color="{StaticResource TextFillColorSecdondary100}"/>
     <SolidColorBrush x:Key="TransparentIconButtonBackground" Color="Transparent"/>
     <SolidColorBrush x:Key="TransparentIconButtonBorderBrush" Color="Transparent"/>
-    <SolidColorBrush x:Key="TransparentIconButtonAlertMouseOver" Color="{StaticResource AlertColor100}"/>
-    <SolidColorBrush x:Key="TransparentIconButtonAlertPressed" Color="{StaticResource AlertColor90}"/>
+    <SolidColorBrush x:Key="TransparentIconButtonAlertMouseOverBackground" Color="{StaticResource AlertColor100}"/>
+    <SolidColorBrush x:Key="TransparentIconButtonAlertPressedBackground" Color="{StaticResource AlertColor90}"/>
     <SolidColorBrush x:Key="ToolBarButtonBackground" Color="Transparent"/>
     <SolidColorBrush x:Key="ToolBarButtonBorderBrush" Color="Transparent"/>
     <SolidColorBrush x:Key="ToolBarButtonBackgroundMouseOver" Color="{StaticResource LightGrayColor100}"/>

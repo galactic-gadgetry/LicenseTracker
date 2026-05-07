@@ -11,6 +11,34 @@ namespace LicenseTracker.Services
 {
     static class DialogService
     {
+
+        public static bool PromptUserWithDeleteConfirmationMessage(
+            string name, string id)
+        {
+            string message = "Are you sure that you want to delete " +
+                $"the license for ('{name}', ID: {id})? " +
+                $"This action can't be undone.";
+            string caption = $"Delete '{name}' license";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Exclamation;
+
+            MessageBoxResult result = MessageBox.Show(
+                message, caption, button, icon);
+            return result == MessageBoxResult.Yes ? true : false;
+        }
+
+
+        public static bool PromptUserWithDeleteConfirmationMessage(
+            LicenseItem license)
+        {
+            ArgumentNullException.ThrowIfNull(license, nameof(license));
+
+            string productName = license.Product != null ? license.Product.Name : string.Empty;
+            string id = license.LicenseId;
+
+            return PromptUserWithDeleteConfirmationMessage(productName, id);
+        }
+
         /// <summary>
         /// Displays a error message box to the user.
         /// </summary>

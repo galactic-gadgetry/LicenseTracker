@@ -38,18 +38,7 @@
                         <StackPanel Grid.Column="1" Orientation="Horizontal">
                             <Button Click="XButton_Click">
                                 <Button.Resources>
-                                    <Style TargetType="Button" BasedOn="{StaticResource WindowTitleBarTransparentIconButtonStyle}">
-                                        <Style.Triggers>
-                                            <!-- #Mouse over behaviors -->
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Background" Value="{StaticResource TransparentIconButtonAlertMouseOver}"/>
-                                            </Trigger>
-                                            <!-- #Pressed behaviors -->
-                                            <Trigger Property="IsPressed" Value="True">
-                                                <Setter Property="Background" Value="{StaticResource TransparentIconButtonAlertPressed}"/>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource WindowTitleBarTransparentIconAlertButtonStyle}"/>
                                 </Button.Resources>
                                 <Image>
                                     <Image.Resources>
