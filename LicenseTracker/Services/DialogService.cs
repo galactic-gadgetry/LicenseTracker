@@ -11,9 +11,15 @@ namespace LicenseTracker.Services
 {
     static class DialogService
     {
-
+        /// <summary>
+        /// Displays a delete confirmation message box to the user.
+        /// </summary>
+        /// <param name="name">Name of the item to be deleted</param>
+        /// <param name="id">Optional ID string</param>
+        /// <returns>True if the user confirms delete action,
+        /// false otherwise</returns>
         public static bool PromptUserWithDeleteConfirmationMessage(
-            string name, string id)
+            string name, string id = "")
         {
             string message = "Are you sure that you want to delete " +
                 $"the license for ('{name}', ID: {id})? " +
@@ -27,7 +33,13 @@ namespace LicenseTracker.Services
             return result == MessageBoxResult.Yes ? true : false;
         }
 
-
+        /// <summary>
+        /// Displays a delete license confirmation message box to the
+        /// user.
+        /// </summary>
+        /// <param name="license"></param>
+        /// <returns>True if user confirms delete action,
+        /// false otherwise</returns>
         public static bool PromptUserWithDeleteConfirmationMessage(
             LicenseItem license)
         {

@@ -99,13 +99,40 @@ namespace LicenseTracker.ViewModels
         }
 
 
+        /// <summary>
+        /// Removes the selected license from the current session.
+        /// </summary>
+        /// <exception cref="NullReferenceException">Thrown if the
+        /// <seealso cref="SelectedLicenseItem"/> is null</exception>
+        private void DeleteLicenseRequested()
+        {
+            LicenseItem license = SelectedLicenseItem ??
+                throw new NullReferenceException("The license to " +
+                "be deleted cannot be null");
+
+            string productName = license.Product != null ? license.Product.Name :
+                "None";
+
+            SessionService.RemoveLicenseFromCurrentSession(_sessionStore,
+                license);
+
+            string message = $"The license for '{productName}' has " +
+                $"been deleted";
+            OnInfoUpdated(message);
+
+            SelectedLicenseItem = null;
+        }
+
 
         private void OnFilterUpdateButtonClicked(object? obj)
         {
             throw new NotImplementedException();
         }
 
-
+        /// <summary>
+        /// Handles the License Info Delete button clicked event.
+        /// </summary>
+        /// <param name="obj"></param>
         private void OnLicenseInfoDeleteButtonClicked(object? obj)
         {
             if (SelectedLicenseItem == null)
@@ -116,8 +143,10 @@ namespace LicenseTracker.ViewModels
             bool result =
                 DialogService.PromptUserWithDeleteConfirmationMessage(
                     SelectedLicenseItem);
-
-            throw new NotImplementedException();
+            if (result)
+            {
+                DeleteLicenseRequested();
+            }
         }
 
 

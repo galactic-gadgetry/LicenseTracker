@@ -299,6 +299,45 @@ namespace LicenseTracker.Services
         }
 
         /// <summary>
+        /// Removes the <see cref="LicenseItem"/> instance
+        /// from the <see cref="SessionStore.CurrentSession"/>
+        /// instance.
+        /// </summary>
+        /// <param name="sessionStore"></param>
+        /// <param name="license"></param>
+        public static void RemoveLicenseFromCurrentSession(
+            SessionStore sessionStore, LicenseItem license)
+        {
+            ArgumentNullException.ThrowIfNull(sessionStore, nameof(sessionStore));
+            ArgumentNullException.ThrowIfNull(license, nameof(license));
+
+            RemoveLicenseFromSession(sessionStore.CurrentSession, license);
+        }
+
+        /// <summary>
+        /// Removes the <see cref="LicenseItem"/> instance
+        /// from the <see cref="Session"/> instance.
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="license"></param>
+        /// <exception cref="InvalidOperationException">Thrown if
+        /// the removal fails</exception>
+        public static void RemoveLicenseFromSession(Session session,
+            LicenseItem license)
+        {
+            ArgumentNullException.ThrowIfNull(session, nameof(session));
+            ArgumentNullException.ThrowIfNull(license, nameof(license));
+
+            ObservableCollection<LicenseItem> licenses = session.Licenses;
+            if (!licenses.Remove(license))
+            {
+                throw new InvalidOperationException("Removal of " +
+                    "the LicenseItem instance from the collection " +
+                    "failed");
+            }
+        }
+
+        /// <summary>
         /// Saves the session store's current session to file.
         /// </summary>
         /// <param name="sessionStore"></param>
