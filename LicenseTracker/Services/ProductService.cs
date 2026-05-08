@@ -21,6 +21,17 @@ namespace LicenseTracker.Services
             return product;
         }
 
+
+        public static Product GetDefaultProduct()
+        {
+            Product product = new()
+            {
+                Name = Product.DefaultName,
+            };
+
+            return product;
+        }
+
         /// <summary>
         /// Determines if the data transfer object's properties
         /// are uniqe in the collection.

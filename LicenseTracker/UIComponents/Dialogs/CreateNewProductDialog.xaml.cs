@@ -30,7 +30,7 @@ namespace LicenseTracker.UIComponents.Dialogs
         /// <summary>
         /// New Product instance created, if successful.
         /// </summary>
-        public Product? NewProduct = null;
+        public Product NewProduct = ProductService.GetDefaultProduct();
 
         /// <summary>
         /// Text for the Name text box.
@@ -92,9 +92,8 @@ namespace LicenseTracker.UIComponents.Dialogs
             }
             else
             {
-                NewProduct =
-                    _sessionStore.CurrentSession.Products.
-                    FirstOrDefault(p => p.Name == NameText);
+                NewProduct = _sessionStore.CurrentSession.Products
+                    .First(p => p.Name == NameText);
 
                 return true;
             }

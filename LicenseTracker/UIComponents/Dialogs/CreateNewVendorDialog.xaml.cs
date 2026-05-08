@@ -30,7 +30,7 @@ namespace LicenseTracker.UIComponents.Dialogs
         /// <summary>
         /// New Vendor instance created, if successful.
         /// </summary>
-        public Vendor? NewVendor = null;
+        public Vendor NewVendor = VendorService.GetDefaultVendor();
 
         /// <summary>
         /// Text for the Name text box.
@@ -92,9 +92,8 @@ namespace LicenseTracker.UIComponents.Dialogs
             }
             else
             {
-                NewVendor =
-                    _sessionStore.CurrentSession.Vendors.
-                    FirstOrDefault(v => v.Name == NameText);
+                NewVendor = _sessionStore.CurrentSession.Vendors
+                    .First(v => v.Name == NameText);
 
                 return true;
             }

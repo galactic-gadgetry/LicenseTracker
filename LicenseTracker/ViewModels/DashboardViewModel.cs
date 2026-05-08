@@ -2,6 +2,7 @@
 using LicenseTracker.Models;
 using LicenseTracker.Services;
 using LicenseTracker.Stores;
+using LicenseTracker.UIComponents.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,7 +25,9 @@ namespace LicenseTracker.ViewModels
         private LicenseItem? selectedLicenseItem = null;
 
 
-
+        /// <summary>
+        /// Returns the session store's current session instance.
+        /// </summary>
         public Session CurrentSession =>
             _sessionStore.CurrentSession;
 
@@ -45,7 +48,7 @@ namespace LicenseTracker.ViewModels
         /// Returns the current session's license collection.
         /// </summary>
         public ObservableCollection<LicenseItem> Licenses =>
-            _sessionStore.CurrentSession.Licenses;
+            CurrentSession.Licenses;
 
         /// <summary>
         /// The currently selected license.
@@ -67,7 +70,15 @@ namespace LicenseTracker.ViewModels
         /// </summary>
         public ICommand FilterUpdateButtonClickedCommand { get; }
 
+        /// <summary>
+        /// Executed when the License Info Delete button is clicked.
+        /// </summary>
         public ICommand LicenseInfoDeleteButtonClickedCommand { get; }
+
+        /// <summary>
+        /// Executed when the License Info Edit button is clicked.
+        /// </summary>
+        public ICommand LicenseInfoEditButtonClickedCommand { get; }
 
         /// <summary>
         /// Executed when the New License button is clicked.
@@ -85,13 +96,12 @@ namespace LicenseTracker.ViewModels
         {
             _sessionStore = sessionStore;
 
-            // DELETE ME!!!!!!!!!!!!!!!
-            //_sessionStore.CurrentSession.Licenses = Licenses;
-
             FilterUpdateButtonClickedCommand = new RelayCommand(
                 new Action<object?>(OnFilterUpdateButtonClicked));
             LicenseInfoDeleteButtonClickedCommand = new RelayCommand(
                 new Action<object?>(OnLicenseInfoDeleteButtonClicked));
+            LicenseInfoEditButtonClickedCommand = new RelayCommand(
+                new Action<object?>(OnLicenseInfoEditButtonClicked));
             NewLicenseButtonClickedCommand = new RelayCommand(
                 new Action<object?>(OnNewLicenseButtonClicked));
             SaveButtonClickedCommand = new RelayCommand(
@@ -110,17 +120,37 @@ namespace LicenseTracker.ViewModels
                 throw new NullReferenceException("The license to " +
                 "be deleted cannot be null");
 
-            string productName = license.Product != null ? license.Product.Name :
-                "None";
+            string productName = license.Product != null ? license.Product.Name
+                : Product.DefaultName;
 
             SessionService.RemoveLicenseFromCurrentSession(_sessionStore,
                 license);
 
-            string message = $"The license for '{productName}' has " +
+            string infoText = $"The license for '{productName}' has " +
                 $"been deleted";
-            OnInfoUpdated(message);
+            OnInfoUpdated(infoText);
 
             SelectedLicenseItem = null;
+        }
+
+        /// <summary>
+        /// Prompts the user with a dialog to allow them edit the
+        /// selected License Item's details.
+        /// </summary>
+        /// <exception cref="NullReferenceException">Thrown if the
+        /// <seealso cref="SelectedLicenseItem"/> is null</exception>
+        private void EditLicenseRequested()
+        {
+            LicenseItem license = SelectedLicenseItem ??
+                throw new NullReferenceException("The license to " +
+                "be delted cannot be null");
+
+            EditLicenseDialog dlg =
+                DialogService.PromptUserWithEditLicenseDialog(
+                    _sessionStore, SelectedLicenseItem);
+
+            string infoText = $"License updated";
+            OnInfoUpdated(infoText);
         }
 
 
@@ -130,7 +160,7 @@ namespace LicenseTracker.ViewModels
         }
 
         /// <summary>
-        /// Handles the License Info Delete button clicked event.
+        /// Handles the License Info Delete button click event.
         /// </summary>
         /// <param name="obj"></param>
         private void OnLicenseInfoDeleteButtonClicked(object? obj)
@@ -149,6 +179,15 @@ namespace LicenseTracker.ViewModels
             }
         }
 
+        /// <summary>
+        /// Handles the License Info Edit button click event.
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnLicenseInfoEditButtonClicked(object? obj)
+        {
+            EditLicenseRequested();
+        }
+
 
         private void OnNewLicenseButtonClicked(object? obj)
         {
@@ -157,7 +196,7 @@ namespace LicenseTracker.ViewModels
                     _sessionStore);
         }
 
-
+        
         private void OnSaveButtonClicked(object? obj)
         {
             (bool, string) result =

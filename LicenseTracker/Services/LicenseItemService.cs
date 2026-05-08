@@ -31,6 +31,25 @@ namespace LicenseTracker.Services
         }
 
         /// <summary>
+        /// Determines if the <see cref="LicenseItemDTO"/> properties
+        /// are unique in the collection.
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="dto"></param>
+        /// <returns>True if unique, false with details
+        /// otherwise</returns>
+        public static (bool, string?) IsLicenseItemDtoUniqueInCollection(
+            IEnumerable<LicenseItem> collection, LicenseItemDTO dto)
+        {
+            ArgumentNullException.ThrowIfNull(collection, nameof(collection));
+            ArgumentNullException.ThrowIfNull(dto, nameof(dto));
+
+            LicenseItem license = LicenseItemService.CreateNewLicenseItem(dto);
+
+            return IsLicenseItemUniqueInCollection(collection, license);
+        }
+
+        /// <summary>
         /// Determines if the <see cref="LicenseItem"/> properties
         /// are unique in the collection.
         /// </summary>
@@ -76,6 +95,26 @@ namespace LicenseTracker.Services
 
             return IsLicenseItemUniqueInCollection(
                 session.Licenses, license);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="LicenseItem"/> properties to that
+        /// of the <see cref="LicenseItemDTO"/>.
+        /// </summary>
+        /// <param name="license"></param>
+        /// <param name="dto"></param>
+        public static void UpdateLicenseDetails(LicenseItem license,
+            LicenseItemDTO dto)
+        {
+            license.Administrator = dto.Administrator;
+            license.ExpirationDate = dto.ExpirationDate;
+            license.IssueDate = dto.IssueDate;
+            license.LicenseId = dto.LicenseId;
+            license.Product = dto.Product;
+            license.PurchaseDate = dto.PurchaseDate;
+            license.Status = dto.Status;
+            license.User = dto.User;
+            license.Vendor = dto.Vendor;
         }
     }
 }

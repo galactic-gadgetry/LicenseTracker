@@ -52,6 +52,25 @@ namespace LicenseTracker.Services
         }
 
         /// <summary>
+        /// Displays the <see cref="EditLicenseDialog"/> to the
+        /// user.
+        /// </summary>
+        /// <param name="sessionStore"></param>
+        /// <param name="license"></param>
+        /// <returns></returns>
+        public static EditLicenseDialog PromptUserWithEditLicenseDialog(
+            SessionStore sessionStore, LicenseItem license)
+        {
+            EditLicenseDialog dlg = new(sessionStore, license);
+            Window mainWindow = Application.Current.MainWindow;
+            dlg.Owner = mainWindow;
+
+            dlg.ShowDialog();
+
+            return dlg;
+        }
+
+        /// <summary>
         /// Displays a error message box to the user.
         /// </summary>
         /// <param name="caption"></param>

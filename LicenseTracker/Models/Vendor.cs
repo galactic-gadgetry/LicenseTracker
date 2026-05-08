@@ -7,6 +7,10 @@ namespace LicenseTracker.Models
     public class Vendor
     {
 
+        public const string DefaultName = "None";
+
+
+
         public string Name { get; set; }
 
 

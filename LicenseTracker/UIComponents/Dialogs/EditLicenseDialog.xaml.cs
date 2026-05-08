@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Printing;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,12 +20,17 @@ using System.Windows.Shapes;
 namespace LicenseTracker.UIComponents.Dialogs
 {
     /// <summary>
-    /// Interaction logic for CreateNewLicenseDialog.xaml
+    /// Interaction logic for EditLicenseDialog.xaml
     /// </summary>
-    public partial class CreateNewLicenseDialog : Window, INotifyPropertyChanged
+    public partial class EditLicenseDialog : Window, INotifyPropertyChanged
     {
         /// <summary>
-        /// Use to manage the app's session state.
+        /// The license to be edited.
+        /// </summary>
+        private LicenseItem _license;
+
+        /// <summary>
+        /// Used to manage the app's session state.
         /// </summary>
         private readonly SessionStore _sessionStore;
 
@@ -196,14 +201,12 @@ namespace LicenseTracker.UIComponents.Dialogs
         public event PropertyChangedEventHandler? PropertyChanged;
 
 
-        /// <summary>
-        /// Initializes a new instance of the
-        /// <seealso cref="CreateNewLicenseDialog"/> class.
-        /// </summary>
-        /// <param name="sessionStore"></param>
-        public CreateNewLicenseDialog(SessionStore sessionStore)
+
+        public EditLicenseDialog(SessionStore sessionStore,
+            LicenseItem license)
         {
             _sessionStore = sessionStore;
+            _license = license;
             DataContext = this;
 
             InitializeInputFields();
@@ -315,58 +318,6 @@ namespace LicenseTracker.UIComponents.Dialogs
         }
 
         /// <summary>
-        /// Handles the Create button click event.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CreateButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (CreateLicenseItemRequested())
-            {
-                DialogResult = true;
-            }
-        }
-
-        /// <summary>
-        /// Creates a new License Item instance, if valid, and adds
-        /// it to the current Session's
-        /// <see cref="Session.Licenses"/> collection.
-        /// </summary>
-        /// <returns>True if successful, false otherwise</returns>
-        private bool CreateLicenseItemRequested()
-        {
-            LicenseItemDTO dto = new()
-            {
-                Administrator = SelectedAdministrator,
-                ExpirationDate = SelectedExpirationDate,
-                IssueDate = SelectedIssueDate,
-                LicenseId = NumberOrID,
-                Product = SelectedProduct,
-                PurchaseDate = SelectedPurchaseDate,
-                Status = SelectedStatus,
-                User = SelectedUser,
-                Vendor = SelectedVendor,
-            };
-
-            (bool result, string? detail) =
-                SessionService.CreateNewLicenseItemInCurrentSession(
-                    _sessionStore, dto);
-            if (!result)
-            {
-                string caption = "License Conflict Error";
-                string message = $"The selected {detail} is " +
-                    $"assigned to another license. License " +
-                    $"{detail} must be unique.";
-                DialogService.PromptUserWithErrorMessageWithOKButtonDialog(
-                    caption, message);
-
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
         /// Creates a new User instance and adds it to the current
         /// session's <see cref="Session.Users"/> collection, if
         /// valid.
@@ -397,31 +348,88 @@ namespace LicenseTracker.UIComponents.Dialogs
             this.DragMove();
         }
 
+
         /// <summary>
-        /// Initializes the input fields to their default values.
+        /// Initializes the input fields to the
+        /// <seealso cref="_license"/> values.
         /// </summary>
         private void InitializeInputFields()
         {
+            NumberOrID = _license.LicenseId;
             SelectedAdministrator = Users
-                .FirstOrDefault(u => u.Name == User.DefaultName)!;
-            SelectedProduct = Products
-                .FirstOrDefault(p => p.Name == Product.DefaultName)!;
-            SelectedStatus = Statuses
-                .FirstOrDefault(s => s == LicenseItem.LicenseStatus.Active)!;
-            SelectedUser = Users
-                .FirstOrDefault(u => u.Name == User.DefaultName)!;
-            SelectedVendor = Vendors
-                .FirstOrDefault(v => v.Name == Vendor.DefaultName)!;
+                .First(u => u.Name == _license.Administrator.Name);
+            SelectedExpirationDate = _license.ExpirationDate;
+            SelectedIssueDate = _license.IssueDate;
+            SelectedProduct = Products.
+                First(p => p.Name == _license.Product.Name);
+            SelectedStatus = _license.Status;
+            SelectedUser = Users.
+                First(u => u.Name == _license.User.Name);
+            SelectedVendor = Vendors.
+                First(v => v.Name == _license.Vendor.Name);
         }
 
         /// <summary>
         /// Handles the <seealso cref="PropertyChanged"/> event.
         /// </summary>
-        /// <param name="parameterName"></param>
-        private void OnPropertyChanged(string parameterName)
+        /// <param name="propertyName"></param>
+        private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this,
-                new PropertyChangedEventArgs(parameterName));
+                new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// Handles the Save button click event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (SaveLicenseDetailsRequested())
+            {
+                DialogResult = true;
+            }
+        }
+
+        /// <summary>
+        /// Saves the license details to the
+        /// <seealso cref="_license"/> instance, if valid.
+        /// </summary>
+        /// <returns>True if successful, false
+        /// otherwise</returns>
+        private bool SaveLicenseDetailsRequested()
+        {
+            LicenseItemDTO dto = new()
+            {
+                Administrator = SelectedAdministrator,
+                ExpirationDate = SelectedExpirationDate,
+                IssueDate = SelectedIssueDate,
+                LicenseId = NumberOrID,
+                Product = SelectedProduct,
+                PurchaseDate = SelectedPurchaseDate,
+                Status = SelectedStatus,
+                User = SelectedUser,
+                Vendor = SelectedVendor,
+            };
+
+            (bool result, string? detail) =
+                SessionService.EditLicenseItemDetailsInCurrentSession(
+                    _sessionStore, _license, dto);
+            if (!result)
+            {
+
+                string caption = "License Conflict Error";
+                string message = $"The selected {detail} is " +
+                    $"assigned to another license. License " +
+                    $"{detail} must be unique.";
+                DialogService.PromptUserWithErrorMessageWithOKButtonDialog(
+                    caption, message);
+
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>

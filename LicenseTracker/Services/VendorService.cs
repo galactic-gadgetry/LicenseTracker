@@ -21,6 +21,17 @@ namespace LicenseTracker.Services
             return vendor;
         }
 
+
+        public static Vendor GetDefaultVendor()
+        {
+            Vendor vendor = new()
+            {
+                Name = Vendor.DefaultName,
+            };
+
+            return vendor;
+        }
+
         /// <summary>
         /// Determines if the <see cref="Vendor"/> properties are
         /// unique in the collection.

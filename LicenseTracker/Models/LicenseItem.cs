@@ -1,10 +1,12 @@
-﻿using System;
+﻿using LicenseTracker.Services;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace LicenseTracker.Models
 {
-    public class LicenseItem
+    public class LicenseItem: INotifyPropertyChanged
     {
 
         public enum LicenseStatus
@@ -17,31 +19,120 @@ namespace LicenseTracker.Models
 
 
 
-        public User? Administrator { get; set; }
+        // Backing Fields
+        private User administrator = UserService.GetDefaultUser();
+        private string licenseId = string.Empty;
+        private DateTime? expirationDate;
+        private DateTime? issueDate;
+        private Product product = ProductService.GetDefaultProduct();
+        private DateTime? purchaseDate;
+        private LicenseStatus status = LicenseStatus.Active;
+        private User user = UserService.GetDefaultUser();
+        private Vendor vendor = VendorService.GetDefaultVendor();
 
 
-        public DateTime? ExpirationDate { get; set; }
+
+        public User Administrator
+        {
+            get => administrator;
+            set
+            {
+                administrator = value;
+                OnPropertyChanged(nameof(Administrator));
+            }
+        }
 
 
-        public DateTime? IssueDate { get; set; }
+        public DateTime? ExpirationDate
+        {
+            get => expirationDate;
+            set
+            {
+                expirationDate = value;
+                OnPropertyChanged(nameof(ExpirationDate));
+            }
+        }
 
 
-        public string LicenseId { get; set; } = string.Empty;
+        public DateTime? IssueDate
+        {
+            get => issueDate;
+            set
+            {
+                issueDate = value;
+                OnPropertyChanged(nameof(IssueDate));
+            }
+        }
 
 
-        public Product? Product { get; set; }
+        public string LicenseId
+        {
+            get => licenseId;
+            set
+            {
+                licenseId = value;
+                OnPropertyChanged(nameof(LicenseId));
+            }
+        }
 
 
-        public DateTime? PurchaseDate { get; set; }
+        public Product Product
+        {
+            get => product;
+            set
+            {
+                product = value;
+                OnPropertyChanged(nameof(Product));
+            }
+        }
 
 
-        public LicenseStatus Status { get; set; }
+        public DateTime? PurchaseDate
+        {
+            get => purchaseDate;
+            set
+            {
+                purchaseDate = value;
+                OnPropertyChanged(nameof(PurchaseDate));
+            }
+        }
 
 
-        public User? User { get; set; }
+        public LicenseStatus Status
+        {
+            get => status;
+            set
+            {
+                status = value;
+                OnPropertyChanged(nameof(Status));
+            }
+        }
 
 
-        public Vendor? Vendor { get; set; }
+        public User User
+        {
+            get => user;
+            set
+            {
+                user = value;
+                OnPropertyChanged(nameof(User));
+            }
+        }
+
+
+        public Vendor Vendor
+        {
+            get => vendor;
+            set
+            {
+                vendor = value;
+                OnPropertyChanged(nameof(Vendor));
+            }
+        }
+
+
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
 
 
@@ -55,6 +146,13 @@ namespace LicenseTracker.Models
             {
                 return (false, null);
             }
+        }
+
+
+        public virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this,
+                new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -226,7 +226,7 @@
                                                 Command="{Binding LicenseInfoDeleteButtonClickedCommand}"/>
                                             <Button
                                                 Content="Edit"
-                                                />
+                                                Command="{Binding LicenseInfoEditButtonClickedCommand}"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </Border>

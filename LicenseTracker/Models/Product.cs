@@ -7,6 +7,10 @@ namespace LicenseTracker.Models
     public class Product
     {
 
+        public const string DefaultName = "None";
+
+
+
         public string Name { get; set; } = string.Empty;
 
 

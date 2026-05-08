@@ -13,9 +13,20 @@ namespace LicenseTracker.Services
         {
             ArgumentNullException.ThrowIfNull(dto, nameof(dto));
 
-            User user = new User()
+            User user = new()
             {
                 Name = dto.Name,
+            };
+
+            return user;
+        }
+
+
+        public static User GetDefaultUser()
+        {
+            User user = new()
+            {
+                Name = User.DefaultName,
             };
 
             return user;

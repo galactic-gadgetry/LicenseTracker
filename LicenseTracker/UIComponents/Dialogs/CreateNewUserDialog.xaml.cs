@@ -30,7 +30,7 @@ namespace LicenseTracker.UIComponents.Dialogs
         /// <summary>
         /// New User instance created, if successful.
         /// </summary>
-        public User? NewUser = null;
+        public User NewUser = UserService.GetDefaultUser();
 
         /// <summary>
         /// Text for the Name text box.
@@ -92,9 +92,8 @@ namespace LicenseTracker.UIComponents.Dialogs
             }
             else
             {
-                NewUser =
-                    _sessionStore.CurrentSession.Users.
-                    FirstOrDefault(u => u.Name == NameText);
+                NewUser = _sessionStore.CurrentSession.Users
+                    .First(u => u.Name == NameText);
 
                 return true;
             }

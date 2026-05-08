@@ -7,6 +7,10 @@ namespace LicenseTracker.Models
     public class User
     {
 
+        public const string DefaultName = "Unassigned";
+
+
+
         public string Name { get; set; } = String.Empty;
 
 
