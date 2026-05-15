@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LicenseTracker.ViewModels
 {
-    internal class LayoutViewModel : ViewModelBase
+    public class LayoutViewModel : ViewModelBase
     {
         // Backing Fields
         private string infoText = string.Empty;

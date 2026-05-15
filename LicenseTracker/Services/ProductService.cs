@@ -40,7 +40,7 @@ namespace LicenseTracker.Services
         /// <param name="dto"></param>
         /// <returns>True if unique, false with details
         /// otherwise</returns>
-        public static (bool, string?) IsProductUniqueInCollection(
+        public static (bool, string?) IsProductDtoUniqueInCollection(
             IEnumerable<Product> collection, ProductDTO dto)
         {
             ArgumentNullException.ThrowIfNull(collection, nameof(collection));

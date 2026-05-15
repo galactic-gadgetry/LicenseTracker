@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LicenseTracker.Services
 {
-    internal interface INavigate
+    public interface INavigate
     {
 
         public void Navigate();

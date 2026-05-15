@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LicenseTracker.Stores
 {
-    internal class NavigationStore
+    public class NavigationStore
     {
         // Backing Fields
         private ViewModelBase? currentLayoutContentViewModel;

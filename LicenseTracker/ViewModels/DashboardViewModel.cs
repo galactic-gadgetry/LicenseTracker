@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace LicenseTracker.ViewModels
 {
-    internal class DashboardViewModel : ViewModelBase
+    public class DashboardViewModel : ViewModelBase
     {
         /// <summary>
         /// Used to the manage the app's session state.
@@ -123,7 +123,7 @@ namespace LicenseTracker.ViewModels
             string productName = license.Product != null ? license.Product.Name
                 : Product.DefaultName;
 
-            SessionService.RemoveLicenseFromCurrentSession(_sessionStore,
+            SessionService.RemoveLicenseItemFromCurrentSession(_sessionStore,
                 license);
 
             string infoText = $"The license for '{productName}' has " +

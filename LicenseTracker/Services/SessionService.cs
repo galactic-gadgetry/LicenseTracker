@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace LicenseTracker.Services
 {
-    static class SessionService
+    public static class SessionService
     {
         /// <summary>
         /// Adds the <see cref="LicenseItem"/> instance to the
@@ -311,6 +311,8 @@ namespace LicenseTracker.Services
 
         public static void InitializeSessionCollections(Session session)
         {
+            ArgumentNullException.ThrowIfNull(session, nameof(session));
+
             if (!session.Products
                 .Any(p => p.Name == Product.DefaultName))
             {
@@ -354,13 +356,13 @@ namespace LicenseTracker.Services
         /// </summary>
         /// <param name="sessionStore"></param>
         /// <param name="license"></param>
-        public static void RemoveLicenseFromCurrentSession(
+        public static void RemoveLicenseItemFromCurrentSession(
             SessionStore sessionStore, LicenseItem license)
         {
             ArgumentNullException.ThrowIfNull(sessionStore, nameof(sessionStore));
             ArgumentNullException.ThrowIfNull(license, nameof(license));
 
-            RemoveLicenseFromSession(sessionStore.CurrentSession, license);
+            RemoveLicenseItemFromSession(sessionStore.CurrentSession, license);
         }
 
         /// <summary>
@@ -371,7 +373,7 @@ namespace LicenseTracker.Services
         /// <param name="license"></param>
         /// <exception cref="InvalidOperationException">Thrown if
         /// the removal fails</exception>
-        public static void RemoveLicenseFromSession(Session session,
+        public static void RemoveLicenseItemFromSession(Session session,
             LicenseItem license)
         {
             ArgumentNullException.ThrowIfNull(session, nameof(session));
