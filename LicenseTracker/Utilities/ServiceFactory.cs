@@ -7,7 +7,7 @@ using System.Text;
 
 namespace LicenseTracker.Utilities
 {
-    internal static class ServiceFactory
+    public static class ServiceFactory
     {
 
         public static INavigate CreateNavigationService(string type,

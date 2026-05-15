@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="LicenseTracker/LicenseTracker.csproj" />
+  <Project Path="LicenseTrackerTests/LicenseTrackerTests.csproj" Id="114f8cba-b1cb-4340-bd91-7ed043985409" />
   <Project Path="MercuryUI/MercuryUI.csproj" Id="66e2c8c9-2c53-47c5-b577-3c85435ef159" />
 </Solution>

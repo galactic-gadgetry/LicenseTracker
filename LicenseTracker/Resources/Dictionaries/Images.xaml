@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <BitmapImage x:Key="XBlack" UriSource="/LicenseTracker;component/Resources/Images/Icons/X/x_black.png"/>
+    <BitmapImage x:Key="XLightGray" UriSource="/LicenseTracker;component/Resources/Images/Icons/X/x_light_gray.png"/>
+    <BitmapImage x:Key="XWhite" UriSource="/LicenseTracker;component/Resources/Images/Icons/X/x_white.png"/>
+
+
+    <Style x:Key="TransparentIconButtonImageStyle" TargetType="Image">
+        <Setter Property="Height" Value="{DynamicResource TransparentIconButtonImageHeight}"/>
+    </Style>
+
+</ResourceDictionary>

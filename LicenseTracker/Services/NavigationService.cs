@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LicenseTracker.Services
 {
-    internal class NavigationService<TViewModel> : INavigate
+    public class NavigationService<TViewModel> : INavigate
         where TViewModel : ViewModelBase
     {
         /// <summary>

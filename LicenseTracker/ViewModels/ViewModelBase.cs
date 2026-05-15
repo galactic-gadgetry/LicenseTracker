@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LicenseTracker.ViewModels
 {
-    internal class ViewModelBase : INotifyPropertyChanged
+    public class ViewModelBase : INotifyPropertyChanged
     {
 
         public event EventHandler<string>? InfoUpdated;

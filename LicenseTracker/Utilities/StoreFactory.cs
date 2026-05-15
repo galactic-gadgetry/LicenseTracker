@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LicenseTracker.Utilities
 {
-    internal static class StoreFactory
+    public static class StoreFactory
     {
 
         public static NavigationStore GetNewNaivgationStore()

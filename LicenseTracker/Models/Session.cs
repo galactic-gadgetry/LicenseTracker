@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
 
 namespace LicenseTracker.Models
 {
-    class Session : INotifyPropertyChanged
+    public class Session : INotifyPropertyChanged
     {
 
         // Backing Fields
@@ -33,6 +34,15 @@ namespace LicenseTracker.Models
         public ObservableCollection<LicenseItem> Licenses { get; set; } = new();
 
 
+        public ObservableCollection<Product> Products { get; set;  } = new();
+
+
+        public ObservableCollection<User> Users { get; set; } = new();
+
+
+        public ObservableCollection<Vendor> Vendors { get; set; } = new();
+
+
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -47,14 +57,43 @@ namespace LicenseTracker.Models
             SaveFilePath = Path.Combine(
                 FileService.SaveFileDirectory,
                 Id.ToString() + ".json");
+
+            Licenses.CollectionChanged += OnLicensesChanged;
+            Products.CollectionChanged += OnProductsChanged;
+            Users.CollectionChanged += OnUsersChanged;
+            Vendors.CollectionChanged += OnVendorsChanged;
         }
 
-
+        
 
         public virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this,
                 new PropertyChangedEventArgs(propertyName));
         }
+
+
+        private void OnLicensesChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            HasUnsavedChanges = true;
+        }
+
+
+        private void OnUsersChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            HasUnsavedChanges = true;
+        }
+
+
+        private void OnProductsChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            HasUnsavedChanges = true;
+        }
+
+
+        private void OnVendorsChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            HasUnsavedChanges = true;
+        }        
     }
 }

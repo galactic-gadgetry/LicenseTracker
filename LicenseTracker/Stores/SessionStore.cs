@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LicenseTracker.Stores
 {
-    class SessionStore
+    public class SessionStore
     {
         public Session CurrentSession;
 

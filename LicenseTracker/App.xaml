@@ -8,8 +8,16 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/MercuryUI;component/MercuryUI.xaml"/>
 
+                <ResourceDictionary Source="Resources/Dictionaries/Borders.xaml"/>
                 <ResourceDictionary Source="Resources/Dictionaries/Buttons.xaml"/>
                 <ResourceDictionary Source="Resources/Dictionaries/Converters.xaml"/>
+                <ResourceDictionary Source="Resources/Dictionaries/Images.xaml"/>
+                <ResourceDictionary Source="Resources/Dictionaries/TextControls.xaml"/>
+                <ResourceDictionary Source="Resources/Dictionaries/Variables.xaml"/>
+                <ResourceDictionary Source="Resources/Dictionaries/Windows.xaml"/>
+
+                <!-- Relies on TextControls.xaml for interal styles -->
+                <ResourceDictionary Source="Resources/Dictionaries/PanelControls.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
          
