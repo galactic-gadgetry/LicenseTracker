@@ -1,5 +1,6 @@
 ﻿using LicenseTracker.Commands;
 using LicenseTracker.Models;
+using LicenseTracker.Models.DTOs;
 using LicenseTracker.Services;
 using LicenseTracker.Stores;
 using LicenseTracker.UIComponents.Dialogs;
@@ -149,7 +150,9 @@ namespace LicenseTracker.ViewModels
                 DialogService.PromptUserWithEditLicenseDialog(
                     _sessionStore, SelectedLicenseItem);
 
-            string infoText = $"License updated";
+            string infoText = $"License for " +
+                $"{dlg.SelectedProduct.Name} " +
+                $"(ID: {dlg.NumberOrID}) updated";
             OnInfoUpdated(infoText);
         }
 
@@ -191,9 +194,36 @@ namespace LicenseTracker.ViewModels
 
         private void OnNewLicenseButtonClicked(object? obj)
         {
-            bool result =
+            CreateNewLicenseDialog dlg =
                 DialogService.PromptUserWithNewLicenseDialog(
                     _sessionStore);
+
+            if (dlg.DialogResult == true)
+            {
+                OnNewLicenseRequested(dlg);
+            }
+        }
+
+
+        private void OnNewLicenseRequested(CreateNewLicenseDialog dlg)
+        {
+            LicenseItemDTO? dto = dlg.NewLicenseItemDto;
+            if (dto == null)
+            {
+                throw new InvalidOperationException("The " +
+                    "CreateNewLicenseDialog's NewLicenseItemDto " +
+                    "cannot be null");
+            }
+
+            (bool result, string? detail) =
+                SessionService.CreateNewLicenseItemInCurrentSession(
+                    _sessionStore, dto);
+            if (result)
+            {
+                string infoText = $"New {dto.Product.Name} license " +
+                    $"(ID: {dto.LicenseId}) created";
+                OnInfoUpdated(infoText);
+            }
         }
 
         

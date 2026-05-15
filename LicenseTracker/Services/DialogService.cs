@@ -91,7 +91,7 @@ namespace LicenseTracker.Services
         /// <param name="sessionStore"></param>
         /// <returns>True if license was created, false
         /// otherwise</returns>
-        public static bool PromptUserWithNewLicenseDialog(SessionStore sessionStore)
+        public static CreateNewLicenseDialog PromptUserWithNewLicenseDialog(SessionStore sessionStore)
         {
             CreateNewLicenseDialog dlg = new(sessionStore);
             Window mainWindow = Application.Current.MainWindow;
@@ -99,7 +99,7 @@ namespace LicenseTracker.Services
 
             dlg.ShowDialog();
 
-            return dlg.DialogResult ?? false;
+            return dlg;
         }
 
         /// <summary>

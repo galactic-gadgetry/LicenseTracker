@@ -47,6 +47,9 @@ namespace LicenseTracker.UIComponents.Dialogs
         public Session CurrentSession =>
             _sessionStore.CurrentSession;
 
+
+        public LicenseItemDTO? NewLicenseItemDto;
+
         /// <summary>
         /// Text for the license ID.
         /// </summary>
@@ -349,8 +352,8 @@ namespace LicenseTracker.UIComponents.Dialogs
             };
 
             (bool result, string? detail) =
-                SessionService.CreateNewLicenseItemInCurrentSession(
-                    _sessionStore, dto);
+                LicenseItemService.IsLicenseItemDtoUniqueInSession(
+                    _sessionStore.CurrentSession, dto);
             if (!result)
             {
                 string caption = "License Conflict Error";
@@ -362,8 +365,11 @@ namespace LicenseTracker.UIComponents.Dialogs
 
                 return false;
             }
-
-            return true;
+            else
+            {
+                NewLicenseItemDto = dto;
+                return true;
+            }
         }
 
         /// <summary>

@@ -49,6 +49,16 @@ namespace LicenseTracker.Services
             return IsLicenseItemUniqueInCollection(collection, license);
         }
 
+
+        public static (bool, string?) IsLicenseItemDtoUniqueInSession(
+            Session session, LicenseItemDTO dto)
+        {
+            ArgumentNullException.ThrowIfNull(session, nameof(session));
+            ArgumentNullException.ThrowIfNull(dto, nameof(dto));
+
+            return IsLicenseItemDtoUniqueInCollection(session.Licenses, dto);
+        }
+
         /// <summary>
         /// Determines if the <see cref="LicenseItem"/> properties
         /// are unique in the collection.
