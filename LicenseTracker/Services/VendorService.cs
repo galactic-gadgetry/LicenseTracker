@@ -8,6 +8,12 @@ namespace LicenseTracker.Services
 {
     public static class VendorService
     {
+        // Message Strings
+        public const string InvalidNamePropertyEmptyStringMessage =
+            "The name of a vendor cannot be blank.";
+
+
+
 
         public static Vendor CreateNewVendor(VendorDTO dto)
         {
@@ -30,6 +36,27 @@ namespace LicenseTracker.Services
             };
 
             return vendor;
+        }
+
+        /// <summary>
+        /// Determines if the <see cref="VendorDTO"/> properties
+        /// are valid.
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns>True if the properties are valid, false
+        /// otherwise</returns>
+        public static (bool, string?) IsVendorDtoValid(VendorDTO dto)
+        {
+            ArgumentNullException.ThrowIfNull(dto, nameof(dto));
+
+            if (dto.Name == string.Empty)
+            {
+                return (false, InvalidNamePropertyEmptyStringMessage);
+            }
+            else
+            {
+                return (true, null);
+            }
         }
 
         /// <summary>

@@ -8,6 +8,11 @@ namespace LicenseTracker.Services
 {
     public static class ProductService
     {
+        // Message Strings
+        public const string InvalidNamePropertyEmptyStringMessage =
+            "The name of a product cannot be blank.";
+
+
         
         public static Product CreateNewProduct(ProductDTO dto)
         {
@@ -49,6 +54,44 @@ namespace LicenseTracker.Services
             Product product = CreateNewProduct(dto);
 
             return IsProductUniqueInCollection(collection, product);
+        }
+
+        /// <summary>
+        /// Determines if the <see cref="ProductDTO"/> properties
+        /// are valid.
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns>True if the properties are valid, false
+        /// otherwise</returns>
+        public static (bool, string?) IsProductDtoValid(ProductDTO dto)
+        {
+            ArgumentNullException.ThrowIfNull(dto, nameof(dto));
+
+            if (dto.Name == string.Empty)
+            {
+                return (false, InvalidNamePropertyEmptyStringMessage);
+            }
+            else
+            {
+                return (true, null);
+            }
+        }
+
+        /// <summary>
+        /// Determines if the <see cref="Product"/> properties are
+        /// unique in the session.
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="dto"></param>
+        /// <returns>True if unique, false with details
+        /// otherwise</returns>
+        public static (bool, string?) IsProductDtoUniqueInSession(
+            Session session, ProductDTO dto)
+        {
+            ArgumentNullException.ThrowIfNull(session, nameof(session));
+            ArgumentNullException.ThrowIfNull(dto, nameof(dto));
+
+            return IsProductDtoUniqueInCollection(session.Products, dto);
         }
 
         /// <summary>

@@ -116,6 +116,162 @@ public class ProductServiceTests
 
 
     [TestMethod]
+    [TestCategory("IsProductDtoUniqueInSession")]
+    public void IsProductDtoUniqueInSession_NullSession_ThrowsArgumentNullException()
+    {
+        // Arrange
+        ProductDTO dto = new();
+
+        // Assert
+        Assert.Throws<ArgumentNullException>(() => ProductService.IsProductDtoUniqueInSession(null!, dto));
+    }
+
+    [TestMethod]
+    [TestCategory("IsProductDtoUniqueInSession")]
+    public void IsProductDtoUniqueInSession_NullDto_ThrowsArgumentNullException()
+    {
+        // Arrange
+        Session session = new();
+
+        // Assert
+        Assert.Throws<ArgumentNullException>(() => ProductService.IsProductDtoUniqueInSession(session, null!));
+    }
+
+    [TestMethod]
+    [TestCategory("IsProductDtoUniqueInSession")]
+    public void IsProductDtoUniqueInSession_UniqueDto_ReturnsTrue()
+    {
+        // Arrange
+        Product product = new() { Name = id1 };
+        ProductDTO dto = new() { Name = id2 };
+        Session session = SessionService.GetNewSession();
+        session.Products.Add(product);
+
+        // Act
+        (bool result, string? detail) = ProductService.IsProductDtoUniqueInSession(session, dto);
+
+        // Assert
+        Assert.IsTrue(result);
+    }
+
+    [TestMethod]
+    [TestCategory("IsProductDtoUniqueInSession")]
+    public void IsProductDtoUniqueInSession_UniqueDto_ReturnsNull()
+    {
+        // Arrange
+        Product product = new() { Name = id1 };
+        ProductDTO dto = new() { Name = id2 };
+        Session session = SessionService.GetNewSession();
+        session.Products.Add(product);
+
+        // Act
+        (bool result, string? detail) = ProductService.IsProductDtoUniqueInSession(session, dto);
+
+        // Assert
+        Assert.IsNull(detail);
+    }
+    [TestMethod]
+    [TestCategory("IsProductDtoUniqueInSession")]
+    public void IsProductDtoUniqueInSession_NonUniqueDto_ReturnsFalse()
+    {
+        // Arrange
+        Product product = new() { Name = id1 };
+        ProductDTO dto = new() { Name = id1 };
+        Session session = SessionService.GetNewSession();
+        session.Products.Add(product);
+
+        // Act
+        (bool result, string? detail) = ProductService.IsProductDtoUniqueInSession(session, dto);
+
+        // Assert
+        Assert.IsFalse(result);
+    }
+
+    [TestMethod]
+    [TestCategory("IsProductDtoUniqueInSession")]
+    public void IsProductDtoUniqueInSession_NonUniqueDto_ReturnsNameDetal()
+    {
+        // Arrange
+        Product product = new() { Name = id1 };
+        ProductDTO dto = new() { Name = id1 };
+        Session session = SessionService.GetNewSession();
+        session.Products.Add(product);
+
+        // Act
+        (bool result, string? detail) = ProductService.IsProductDtoUniqueInSession(session, dto);
+
+        // Assert
+        Assert.AreEqual("Name", detail);
+    }
+
+
+
+    [TestMethod]
+    [TestCategory("IsProductDtoValid")]
+    public void IsProductDtoValid_NullDto_ThrowsArgumentNullException()
+    {
+        // Assert
+        Assert.Throws<ArgumentNullException>(() => ProductService.IsProductDtoValid(null!));
+    }
+
+    [TestMethod]
+    [TestCategory("IsProductDtoValid")]
+    public void IsProductDtoValid_ValidNameProperty_ReturnsTrue()
+    {
+        // Arange
+        ProductDTO dto = new() { Name = "Valid" };
+
+        // Act
+        (bool result, string? detail) = ProductService.IsProductDtoValid(dto);
+
+        // Assert
+        Assert.IsTrue(result);
+    }
+
+    [TestMethod]
+    [TestCategory("IsProductDtoValid")]
+    public void IsProductDtoValid_ValidNameProperty_ReturnsNull()
+    {
+        // Arange
+        ProductDTO dto = new() { Name = "Valid" };
+
+        // Act
+        (bool result, string? detail) = ProductService.IsProductDtoValid(dto);
+
+        // Assert
+        Assert.IsNull(detail);
+    }
+
+    [TestMethod]
+    [TestCategory("IsProductDtoValid")]
+    public void IsProductDtoValid_EmptyStringNameProperty_ReturnsFalse()
+    {
+        // Arrange
+        ProductDTO dto = new() { Name = string.Empty };
+
+        // Act
+        (bool result, string? detail) = ProductService.IsProductDtoValid(dto);
+
+        // Assert
+        Assert.IsFalse(result);
+    }
+
+    [TestMethod]
+    [TestCategory("IsProductDtoValid")]
+    public void IsProductDtoValid_EmptyStringNameProperty_ReturnsEmptyStringNamePropertyDetail()
+    {
+        // Arrange
+        ProductDTO dto = new() { Name = string.Empty };
+
+        // Act
+        (bool result, string? detail) = ProductService.IsProductDtoValid(dto);
+
+        // Assert
+        Assert.AreEqual(ProductService.InvalidNamePropertyEmptyStringMessage, detail);
+    }
+
+
+    [TestMethod]
     [TestCategory("IsProductUniqueInCollection")]
     public void IsProductUniqueInCollection_NullCollection_ThrowsArgumentNullException()
     {

@@ -73,8 +73,24 @@ namespace LicenseTracker.UIComponents.Dialogs
         private bool AddUserRequested()
         {
             UserDTO dto = new() { Name = NameText };
+            bool result;
+            string? detail;
 
-            (bool result, string? detail) =
+            (result, detail) =
+                UserService.IsUserDtoValid(dto);
+            if (!result)
+            {
+                string caption = "User Detail Errror";
+                string message = detail!;
+                DialogService.PromptUserWithErrorMessageWithOKButtonDialog(
+                    caption, message);
+
+                NameTextBox.Focus();
+
+                return false;
+            }
+
+            (result, detail) =
                 SessionService.CreateNewUserInCurrentSession(
                     _sessionStore, dto);
             if (!result)

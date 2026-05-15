@@ -1,4 +1,5 @@
 using LicenseTracker.Models;
+using LicenseTracker.Models.DTOs;
 using LicenseTracker.Services;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
 
@@ -19,6 +20,71 @@ public class VendorServiceTests
     {
         // Assert
         Assert.Throws<ArgumentNullException>(() => VendorService.CreateNewVendor(null!));
+    }
+
+
+    [TestMethod]
+    [TestCategory("IsVendorDtoValid")]
+    public void IsVendorDtoValid_NullDto_ThrowsArgumentNullException()
+    {
+        // Assert
+        Assert.Throws<ArgumentNullException>(() => VendorService.IsVendorDtoValid(null!));
+    }
+
+    [TestMethod]
+    [TestCategory("IsVendorDtoValid")]
+    public void IsVendorDtoValid_ValidNameProperty_ReturnsTrue()
+    {
+        // Arrange
+        VendorDTO dto = new() { Name = "Valid" };
+
+        // Act
+        (bool result, string? detail) = VendorService.IsVendorDtoValid(dto);
+
+        // Assert
+        Assert.IsTrue(result);
+    }
+
+    [TestMethod]
+    [TestCategory("IsVendorDtoValid")]
+    public void IsVendorDtoValid_ValidNameProperty_ReturnsNull()
+    {
+        // Arrange
+        VendorDTO dto = new() { Name = "Valid" };
+
+        // Act
+        (bool result, string? detail) = VendorService.IsVendorDtoValid(dto);
+
+        // Assert
+        Assert.IsNull(detail);
+    }
+
+    [TestMethod]
+    [TestCategory("IsVendorDtoValid")]
+    public void IsVendorDtoValid_EmptyStringNameProperty_ReturnsFalse()
+    {
+        // Arrange
+        VendorDTO dto = new() { Name = string.Empty };
+
+        // Act
+        (bool result, string? detail) = VendorService.IsVendorDtoValid(dto);
+
+        // Assert
+        Assert.IsFalse(result);
+    }
+
+    [TestMethod]
+    [TestCategory("IsVendorDtoValid")]
+    public void IsVendorDtoValid_EmptyStringNameProperty_ReturnsEmptyStringNamePropertyDetail()
+    {
+        // Arrange
+        VendorDTO dto = new() { Name = string.Empty };
+
+        // Act
+        (bool result, string? detail) = VendorService.IsVendorDtoValid(dto);
+
+        // Assert
+        Assert.AreEqual(VendorService.InvalidNamePropertyEmptyStringMessage, detail);
     }
 
 

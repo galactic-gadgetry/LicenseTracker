@@ -73,8 +73,24 @@ namespace LicenseTracker.UIComponents.Dialogs
         private bool AddProductRequested()
         {
             ProductDTO dto = new() { Name = NameText };
+            bool result;
+            string? detail;
 
-            (bool result, string? detail) =
+            (result, detail) =
+                ProductService.IsProductDtoValid(dto);
+            if (!result)
+            {
+                string caption = "Product Detail Error";
+                string message = detail!;
+                DialogService.PromptUserWithErrorMessageWithOKButtonDialog(
+                    caption, message);
+
+                NameTextBox.Focus();
+
+                return false;
+            }
+
+            (result, detail) =
                 SessionService.CreateNewProductInCurrentSession(
                     _sessionStore, dto);
             if (!result)

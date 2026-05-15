@@ -73,8 +73,24 @@ namespace LicenseTracker.UIComponents.Dialogs
         private bool AddVendorRequested()
         {
             VendorDTO dto = new() { Name = NameText };
+            bool result;
+            string? detail;
 
-            (bool result, string? detail) =
+            (result, detail) =
+                VendorService.IsVendorDtoValid(dto);
+            if (!result)
+            {
+                string caption = "Vendor Detail Error";
+                string message = detail!;
+                DialogService.PromptUserWithErrorMessageWithOKButtonDialog(
+                    caption, message);
+
+                NameTextBox.Focus();
+
+                return false;
+            }
+
+            (result, detail) =
                 SessionService.CreateNewVendorInCurrentSession(
                     _sessionStore, dto);
             if (!result)

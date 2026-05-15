@@ -1,4 +1,5 @@
 using LicenseTracker.Models;
+using LicenseTracker.Models.DTOs;
 using LicenseTracker.Services;
 
 
@@ -18,6 +19,71 @@ public class UserServiceTests
     {
         // Assert
         Assert.Throws<ArgumentNullException>(() => UserService.CreateNewUser(null!));
+    }
+
+
+    [TestMethod]
+    [TestCategory("IsUserDtoValid")]
+    public void IsUserDtoValid_NullDto_ThrowsArgumentOutOfRangeException()
+    {
+        // Assert
+        Assert.Throws<ArgumentNullException>(() => UserService.IsUserDtoValid(null!));
+    }
+
+    [TestMethod]
+    [TestCategory("IsUserDtoValid")]
+    public void IsUserDtoValid_ValidNameProperty_ReturnsTrue()
+    {
+        // Arrange
+        UserDTO dto = new() { Name = "Valid" };
+
+        // Act
+        (bool result, string? detail) = UserService.IsUserDtoValid(dto);
+
+        // Assert
+        Assert.IsTrue(result);
+    }
+
+    [TestMethod]
+    [TestCategory("IsUserDtoValid")]
+    public void IsUserDtoValid_ValidNameProperty_ReturnsNull()
+    {
+        // Arrange
+        UserDTO dto = new() { Name = "Valid" };
+
+        // Act
+        (bool result, string? detail) = UserService.IsUserDtoValid(dto);
+
+        // Assert
+        Assert.IsNull(detail);
+    }
+
+    [TestMethod]
+    [TestCategory("IsUserDtoValid")]
+    public void IsUserDtoValid_EmptyStringNameProperty_ReturnsFalse()
+    {
+        // Arrange
+        UserDTO dto = new() { Name = string.Empty };
+
+        // Act
+        (bool result, string? detail) = UserService.IsUserDtoValid(dto);
+
+        // Assert
+        Assert.IsFalse(result);
+    }
+
+    [TestMethod]
+    [TestCategory("IsUserDtoValid")]
+    public void IsUserDtoValid_EmptyStringNameProperty_ReturnsEmptyStringNamePropertyDetail()
+    {
+        // Arrange
+        UserDTO dto = new() { Name = string.Empty };
+
+        // Act
+        (bool result, string? detail) = UserService.IsUserDtoValid(dto);
+
+        // Assert
+        Assert.AreEqual(UserService.InvalidNamePropertyEmptyStringMessage, detail);
     }
 
 

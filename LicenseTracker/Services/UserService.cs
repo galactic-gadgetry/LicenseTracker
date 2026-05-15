@@ -8,6 +8,12 @@ namespace LicenseTracker.Services
 {
     public static class UserService
     {
+        // Message Strings
+        public const string InvalidNamePropertyEmptyStringMessage =
+            "The name of a user cannot be blank.";
+
+
+
 
         public static User CreateNewUser(UserDTO dto)
         {
@@ -30,6 +36,27 @@ namespace LicenseTracker.Services
             };
 
             return user;
+        }
+
+        /// <summary>
+        /// Determines if the <see cref="UserDTO"/> properties
+        /// are valid.
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns>True if the properties are valid, false
+        /// otherwise</returns>
+        public static (bool, string?) IsUserDtoValid(UserDTO dto)
+        {
+            ArgumentNullException.ThrowIfNull(dto, nameof(dto));
+
+            if (dto.Name == string.Empty)
+            {
+                return (false, InvalidNamePropertyEmptyStringMessage);
+            }
+            else
+            {
+                return (true, null);
+            }
         }
 
         /// <summary>
